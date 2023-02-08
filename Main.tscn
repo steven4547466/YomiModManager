@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://server.png" type="Texture" id=1]
 [ext_resource path="res://theme.tres" type="Theme" id=2]
@@ -82,6 +82,30 @@ Label/styles/normal = null
 [sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.12549, 0.137255, 0.192157, 1 )
 
+[sub_resource type="StyleBoxFlat" id=25]
+bg_color = Color( 0.0784314, 0.0784314, 0.0901961, 1 )
+
+[sub_resource type="StyleBoxFlat" id=27]
+bg_color = Color( 0.0784314, 0.0784314, 0.0901961, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="Theme" id=26]
+Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
+Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+Button/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )
+Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/styles/disabled = null
+Button/styles/focus = SubResource( 25 )
+Button/styles/hover = SubResource( 27 )
+Button/styles/normal = SubResource( 25 )
+Button/styles/pressed = SubResource( 25 )
+
 [sub_resource type="StyleBoxFlat" id=21]
 bg_color = Color( 0.290196, 1, 0.823529, 1 )
 
@@ -96,8 +120,8 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="Main" type="Node"]
 __meta__ = {
-"_edit_horizontal_guides_": [ 516.0 ],
-"_edit_vertical_guides_": [ 111.0 ]
+"_edit_horizontal_guides_": [ 516.0, 346.0 ],
+"_edit_vertical_guides_": [ 111.0, 281.0, 270.0 ]
 }
 
 [node name="MainPanel" type="Panel" parent="."]
@@ -526,6 +550,7 @@ margin_top = 132.0
 margin_right = 345.0
 margin_bottom = 258.0
 rect_min_size = Vector2( 117, 66 )
+scroll_horizontal_enabled = false
 
 [node name="DependenciesContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel/ScrollContainer2"]
 unique_name_in_owner = true
@@ -542,14 +567,18 @@ margin_right = 134.0
 margin_bottom = 288.0
 text = "Description:"
 
-[node name="Description" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
-unique_name_in_owner = true
+[node name="ScrollContainer3" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
 margin_left = 10.0
 margin_top = 293.0
 margin_right = 345.0
 margin_bottom = 447.0
+
+[node name="Description" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel/ScrollContainer3"]
+unique_name_in_owner = true
+margin_right = 325.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 325, 0 )
 autowrap = true
-clip_text = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
 margin_left = 309.0
@@ -629,7 +658,6 @@ text = "Currently Installed: v"
 
 [node name="BundleInfoPanel" type="Panel" parent="MainPanel/InfoPanelContainer"]
 unique_name_in_owner = true
-visible = false
 margin_left = 609.0
 margin_top = 62.0
 margin_right = 1014.0
@@ -745,14 +773,20 @@ margin_right = 134.0
 margin_bottom = 288.0
 text = "Description:"
 
-[node name="BundleDescription" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
-unique_name_in_owner = true
+[node name="ScrollContainer3" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
 margin_left = 10.0
 margin_top = 293.0
 margin_right = 345.0
 margin_bottom = 447.0
+rect_min_size = Vector2( 335, 154 )
+scroll_horizontal_enabled = false
+
+[node name="BundleDescription" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/ScrollContainer3"]
+unique_name_in_owner = true
+margin_right = 325.0
+margin_bottom = 154.0
+rect_min_size = Vector2( 325, 154 )
 autowrap = true
-clip_text = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
 margin_left = 309.0
@@ -831,6 +865,7 @@ text = "Currently Installed: v"
 
 [node name="ModProfileInfoPanel" type="Panel" parent="MainPanel/InfoPanelContainer"]
 unique_name_in_owner = true
+visible = false
 margin_left = 609.0
 margin_top = 62.0
 margin_right = 1014.0
@@ -1174,10 +1209,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -212.5
-margin_top = -64.5
-margin_right = 212.5
-margin_bottom = 64.5
+margin_left = -323.0
+margin_top = -98.0
+margin_right = 212.0
+margin_bottom = 65.0
 
 [node name="ExitUploadButton" type="Button" parent="MainPanel/UploadModPanel"]
 anchor_left = 1.0
@@ -1222,6 +1257,13 @@ margin_right = 77.5
 margin_bottom = 118.5
 text = "Mod zip:"
 
+[node name="Label4" type="Label" parent="MainPanel/UploadModPanel"]
+margin_left = 34.0
+margin_top = 134.0
+margin_right = 85.0
+margin_bottom = 154.0
+text = "Tags:"
+
 [node name="ChooseModZipButton" type="Button" parent="MainPanel/UploadModPanel"]
 unique_name_in_owner = true
 margin_left = 92.0
@@ -1242,6 +1284,132 @@ margin_top = -32.0
 margin_right = -5.0
 margin_bottom = -6.0
 text = "Upload"
+
+[node name="ToggleTagSelect" type="Button" parent="MainPanel/UploadModPanel"]
+margin_left = 92.0
+margin_top = 131.0
+margin_right = 300.0
+margin_bottom = 157.0
+
+[node name="TagsBackground" type="Panel" parent="MainPanel/UploadModPanel/ToggleTagSelect"]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 31.0
+margin_bottom = 159.0
+
+[node name="TagScrollContainer" type="ScrollContainer" parent="MainPanel/UploadModPanel/ToggleTagSelect"]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 31.0
+margin_bottom = 159.0
+rect_min_size = Vector2( 208, 154 )
+scroll_horizontal_enabled = false
+
+[node name="TagsCheckBoxes" type="VBoxContainer" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer"]
+unique_name_in_owner = true
+margin_right = 208.0
+margin_bottom = 380.0
+rect_min_size = Vector2( 208, 0 )
+theme = SubResource( 26 )
+
+[node name="CheckBox" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_right = 208.0
+margin_bottom = 20.0
+text = "Character"
+
+[node name="CheckBox8" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 24.0
+margin_right = 208.0
+margin_bottom = 44.0
+text = "Stage"
+
+[node name="CheckBox2" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 48.0
+margin_right = 208.0
+margin_bottom = 68.0
+text = "Character Skin"
+
+[node name="CheckBox3" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 72.0
+margin_right = 208.0
+margin_bottom = 92.0
+text = "Sound Replacement"
+
+[node name="CheckBox4" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 96.0
+margin_right = 208.0
+margin_bottom = 116.0
+text = "Tweaks"
+
+[node name="CheckBox5" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 120.0
+margin_right = 208.0
+margin_bottom = 140.0
+text = "Gamemode"
+
+[node name="CheckBox6" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 144.0
+margin_right = 208.0
+margin_bottom = 164.0
+text = "Tool"
+
+[node name="CheckBox7" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 168.0
+margin_right = 208.0
+margin_bottom = 188.0
+text = "Library"
+
+[node name="CheckBox9" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 192.0
+margin_right = 208.0
+margin_bottom = 212.0
+text = "Overhaul"
+
+[node name="CheckBox10" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 216.0
+margin_right = 208.0
+margin_bottom = 236.0
+text = "Under Weak Tier"
+
+[node name="CheckBox11" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 240.0
+margin_right = 208.0
+margin_bottom = 260.0
+text = "Weak Tier"
+
+[node name="CheckBox12" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 264.0
+margin_right = 208.0
+margin_bottom = 284.0
+text = "Vanilla Tier"
+
+[node name="CheckBox13" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 288.0
+margin_right = 208.0
+margin_bottom = 308.0
+text = "Above Vanilla Tier"
+
+[node name="CheckBox14" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 312.0
+margin_right = 208.0
+margin_bottom = 332.0
+text = "Strong Tier"
+
+[node name="CheckBox15" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 336.0
+margin_right = 208.0
+margin_bottom = 356.0
+text = "Overpowered Tier"
+
+[node name="CheckBox16" type="CheckBox" parent="MainPanel/UploadModPanel/ToggleTagSelect/TagScrollContainer/TagsCheckBoxes"]
+margin_top = 360.0
+margin_right = 208.0
+margin_bottom = 380.0
+text = "Joke Tier"
 
 [node name="UploadBundlePanel" type="Panel" parent="MainPanel"]
 unique_name_in_owner = true
@@ -1947,6 +2115,7 @@ text = "An update is available. Click Here to automatically download the update.
 [connection signal="pressed" from="MainPanel/UploadModPanel/ExitUploadButton" to="MainPanel" method="_on_ExitUploadButton_pressed"]
 [connection signal="pressed" from="MainPanel/UploadModPanel/ChooseModZipButton" to="MainPanel" method="_on_ChooseModZipButton_pressed"]
 [connection signal="pressed" from="MainPanel/UploadModPanel/UploadModButton" to="MainPanel" method="_on_UploadModButton_pressed"]
+[connection signal="pressed" from="MainPanel/UploadModPanel/ToggleTagSelect" to="MainPanel" method="_on_ToggleTagSelect_pressed"]
 [connection signal="pressed" from="MainPanel/UploadBundlePanel/ExitBundleUploadButton" to="MainPanel" method="_on_ExitBundleUploadButton_pressed"]
 [connection signal="pressed" from="MainPanel/UploadBundlePanel/UploadBundleButton" to="MainPanel" method="_on_UploadBundleButton_pressed"]
 [connection signal="text_changed" from="MainPanel/UploadBundlePanel/BundleUploadSearchBar" to="MainPanel" method="_on_BundleUploadSearchBar_text_changed"]

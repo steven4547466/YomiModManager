@@ -20,6 +20,7 @@ public class Mod
     public int Priority { get; set; }
 
     public List<string> Incompatible { get; set; } = new List<string>();
+    public List<string> Tags { get; set; } = new List<string>();
 
     public bool Disabled { get; set; } = false;
 

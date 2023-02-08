@@ -559,28 +559,29 @@ public class Main : Panel
 				DisableBundle(bundle.Name, true);
 			}
 
+			profile.Disabled = false;
+
 			foreach (ModProfile p in ModProfiles)
 			{
-				p.Disabled = true;
-			}
+				if (!p.Disabled)
+				{
+					foreach (string mod in p.Mods)
+					{
+						if (!ModInstalled(mod) || ModHasUpdate(mod))
+							InstallMod(mod);
+						else
+							EnableMod(mod);
+					}
 
-			foreach (string mod in profile.Mods)
-			{
-				if (!ModInstalled(mod) || ModHasUpdate(mod))
-					InstallMod(mod);
-				else
-					EnableMod(mod);
+					foreach (string bundle in p.Bundles)
+					{
+						if (!BundleInstalled(bundle) || BundleHasUpdate(bundle))
+							InstallBundle(bundle);
+						else
+							EnableBundle(bundle);
+					}
+				}
 			}
-
-			foreach (string bundle in profile.Bundles)
-			{
-				if (!BundleInstalled(bundle) || BundleHasUpdate(bundle))
-					InstallBundle(bundle);
-				else
-					EnableBundle(bundle);
-			}
-
-			profile.Disabled = false;
 
 			SetupProfiles((GetNode("%SearchBar") as LineEdit).Text);
 		}
@@ -1774,6 +1775,14 @@ public class Main : Panel
 		(GetNode("%UploadModPanel") as Panel).Visible = visible;
 		(GetNode("%ChooseModZipButton") as Button).Text = "Choose a file";
 		(GetNode("%ModPassphraseEdit") as LineEdit).Text = string.Empty;
+		(GetNode("%TagsBackground") as Panel).Visible = false;
+		(GetNode("%TagScrollContainer") as ScrollContainer).Visible = false;
+
+		foreach (Button button in GetNode("%TagsCheckBoxes").GetChildren())
+		{
+			button.Pressed = false;
+		}
+
 		ModToUploadPath = string.Empty;
 		ModToUpload = null;
 	}
@@ -2081,6 +2090,16 @@ public class Main : Panel
 				{
 					wc.Headers.Set("passphrase", phrase);
 					wc.Headers.Set("name", ModToUpload.Name);
+
+					foreach (Button button in GetNode("%TagsCheckBoxes").GetChildren())
+					{
+						if (button.Pressed)
+						{
+							ModToUpload.Tags.Add(button.Text);
+						}
+					}
+
+					wc.Headers.Set("tags", string.Join(",", ModToUpload.Tags));
 					wc.UploadFile($"{Paths.RootUrl}/upload_mod", "POST", ModToUploadPath);
 					ShowUploadMessage("Upload success!");
 					InstallMod(ModToUpload.Name);
@@ -2097,6 +2116,15 @@ public class Main : Panel
 			}
 		 }
 	}
+
+	public void _on_ToggleTagSelect_pressed()
+	{
+		Panel background = (GetNode("%TagsBackground") as Panel);
+		ScrollContainer container = (GetNode("%TagScrollContainer") as ScrollContainer);
+		background.Visible = !background.Visible;
+		container.Visible = !container.Visible;
+	}
+
 
 	public void _on_ExitUploadMessageButton_pressed()
 	{
