@@ -1,0 +1,1968 @@
+[gd_scene load_steps=35 format=2]
+
+[ext_resource path="res://server.png" type="Texture" id=1]
+[ext_resource path="res://theme.tres" type="Theme" id=2]
+[ext_resource path="res://font_big.tres" type="DynamicFont" id=3]
+[ext_resource path="res://search.png" type="Texture" id=4]
+[ext_resource path="res://ModIsDependency.cs" type="Script" id=5]
+[ext_resource path="res://font_medium.tres" type="DynamicFont" id=6]
+[ext_resource path="res://check.png" type="Texture" id=7]
+[ext_resource path="res://Main.cs" type="Script" id=8]
+[ext_resource path="res://offline_triangle.png" type="Texture" id=9]
+[ext_resource path="res://PopupTheme.tres" type="Theme" id=10]
+[ext_resource path="res://help.png" type="Texture" id=11]
+[ext_resource path="res://local.png" type="Texture" id=12]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0392157, 0.0470588, 0.0745098, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.0784314, 0.0823529, 0.117647, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.364706, 0.666667, 0.952941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=19]
+bg_color = Color( 0.364706, 0.666667, 0.952941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.184314, 0.2, 0.27451, 1 )
+
+[sub_resource type="StyleBoxFlat" id=20]
+bg_color = Color( 0.184314, 0.2, 0.27451, 1 )
+
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0.113725, 0.121569, 0.168627, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.364706, 0.666667, 0.952941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0.113725, 0.121569, 0.168627, 1 )
+border_color = Color( 0.364706, 0.666667, 0.952941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.184314, 0.2, 0.27451, 1 )
+border_color = Color( 0.364706, 0.666667, 0.952941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.12549, 0.137255, 0.192157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=18]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.184314, 0.2, 0.27451, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.364706, 0.666667, 0.952941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.286275, 0.788235, 0.286275, 1 )
+
+[sub_resource type="StyleBoxFlat" id=24]
+bg_color = Color( 0.79, 0.495067, 0.2844, 1 )
+
+[sub_resource type="Theme" id=9]
+Label/colors/font_color = Color( 0.364706, 0.666667, 0.952941, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = ExtResource( 6 )
+Label/styles/normal = null
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.12549, 0.137255, 0.192157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=21]
+bg_color = Color( 0.290196, 1, 0.823529, 1 )
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 1, 0.290196, 0.290196, 1 )
+
+[sub_resource type="StyleBoxFlat" id=22]
+bg_color = Color( 0.184314, 0.2, 0.27451, 1 )
+
+[sub_resource type="StyleBoxFlat" id=23]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[node name="Main" type="Node"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 516.0 ],
+"_edit_vertical_guides_": [ 111.0 ]
+}
+
+[node name="MainPanel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LeftTabContainer" type="Panel" parent="MainPanel"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 302.0
+margin_bottom = 590.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="LeftTabInnerContainer" type="Panel" parent="MainPanel/LeftTabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="TitleOuterContainer" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -126.0
+margin_top = 10.0
+margin_right = 126.0
+margin_bottom = 114.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="Panel2" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/TitleOuterContainer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -4.99998
+margin_top = -31.0
+margin_right = 39.0
+margin_bottom = 13.0
+rect_rotation = 45.0
+custom_styles/panel = SubResource( 19 )
+
+[node name="TitleInnerContainer" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/TitleOuterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="Panel" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/TitleOuterContainer/TitleInnerContainer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 6.10352e-05
+margin_top = -27.0
+margin_right = 38.0001
+margin_bottom = 11.0
+rect_rotation = 45.0
+custom_styles/panel = SubResource( 20 )
+
+[node name="Title" type="Label" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/TitleOuterContainer/TitleInnerContainer"]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 3 )
+text = "Browse All Mods"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -121.0
+margin_top = -153.0
+margin_right = 121.0
+margin_bottom = 275.0
+rect_min_size = Vector2( 242, 300 )
+scroll_horizontal_enabled = false
+
+[node name="TabContainer" type="VBoxContainer" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 242.0
+margin_bottom = 216.0
+rect_min_size = Vector2( 242, 0 )
+
+[node name="AllModsTab" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer"]
+unique_name_in_owner = true
+margin_right = 242.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 242, 40 )
+hint_tooltip = "Show all mods available from the manager, including those that aren't installed."
+custom_styles/panel = SubResource( 17 )
+
+[node name="TabLabel" type="Label" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/AllModsTab"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -10.0
+margin_right = 237.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 6 )
+text = "All Mods"
+
+[node name="InstalledModsTab" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer"]
+unique_name_in_owner = true
+margin_top = 44.0
+margin_right = 242.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 242, 40 )
+hint_tooltip = "Show installed mods."
+custom_styles/panel = SubResource( 16 )
+
+[node name="TabLabel" type="Label" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/InstalledModsTab"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -10.0
+margin_right = 237.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 6 )
+text = "Installed Mods"
+
+[node name="BundlesTab" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer"]
+unique_name_in_owner = true
+margin_top = 88.0
+margin_right = 242.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 242, 40 )
+hint_tooltip = "Show all available mod bundles from the manager. Including those that aren't installed."
+custom_styles/panel = SubResource( 16 )
+
+[node name="TabLabel" type="Label" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/BundlesTab"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -10.0
+margin_right = 237.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 6 )
+text = "Mod Bundles"
+
+[node name="InstalledBundlesTab" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer"]
+unique_name_in_owner = true
+margin_top = 132.0
+margin_right = 242.0
+margin_bottom = 172.0
+rect_min_size = Vector2( 242, 40 )
+hint_tooltip = "Show installed mod bundles."
+custom_styles/panel = SubResource( 16 )
+
+[node name="TabLabel" type="Label" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/InstalledBundlesTab"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -10.0
+margin_right = 237.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 6 )
+text = "Installed Mod Bundles"
+
+[node name="ModProfilesTab" type="Panel" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer"]
+unique_name_in_owner = true
+margin_top = 176.0
+margin_right = 242.0
+margin_bottom = 216.0
+rect_min_size = Vector2( 242, 40 )
+hint_tooltip = "Show user created mod profiles, for quickly switching between different mods."
+custom_styles/panel = SubResource( 16 )
+
+[node name="TabLabel" type="Label" parent="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/ModProfilesTab"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -10.0
+margin_right = 237.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 6 )
+text = "Mod Profiles"
+
+[node name="Panel2" type="Panel" parent="MainPanel"]
+margin_left = 312.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 50.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="Panel" type="Panel" parent="MainPanel/Panel2"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -18.0
+margin_right = 41.0
+margin_bottom = 18.0
+
+[node name="TextureRect" type="TextureRect" parent="MainPanel/Panel2/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -14.0
+margin_top = -14.0
+margin_right = 14.0
+margin_bottom = 14.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="SearchBar" type="LineEdit" parent="MainPanel/Panel2"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -306.0
+margin_top = -15.0
+margin_right = 202.0
+margin_bottom = 15.0
+placeholder_text = "Search"
+
+[node name="UploadButton" type="Button" parent="MainPanel/Panel2"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -117.0
+margin_top = -13.0
+margin_right = -5.0
+margin_bottom = 13.0
+grow_horizontal = 0
+text = "Upload mod"
+
+[node name="Panel3" type="Panel" parent="MainPanel"]
+margin_left = 312.0
+margin_top = 62.0
+margin_right = 599.0
+margin_bottom = 590.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/Panel3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -140.5
+margin_top = -259.0
+margin_right = 140.5
+margin_bottom = 259.0
+rect_min_size = Vector2( 281, 518 )
+scroll_horizontal_enabled = false
+
+[node name="ModsList" type="VBoxContainer" parent="MainPanel/Panel3/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 281.0
+rect_min_size = Vector2( 281, 0 )
+
+[node name="InfoPanelContainer" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+margin_right = 40.0
+margin_bottom = 40.0
+custom_styles/panel = SubResource( 18 )
+
+[node name="ModInfoPanel" type="Panel" parent="MainPanel/InfoPanelContainer"]
+unique_name_in_owner = true
+visible = false
+margin_left = 609.0
+margin_top = 62.0
+margin_right = 1014.0
+margin_bottom = 590.0
+theme = ExtResource( 2 )
+custom_styles/panel = SubResource( 7 )
+
+[node name="Panel" type="Panel" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 4.0
+margin_top = 9.0
+margin_right = 302.0
+margin_bottom = 54.0
+rect_clip_content = true
+custom_styles/panel = SubResource( 11 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -149.0
+margin_right = 111.0
+margin_bottom = 44.0
+scroll_vertical_enabled = false
+
+[node name="ModName" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel/Panel/ScrollContainer"]
+unique_name_in_owner = true
+margin_bottom = 32.0
+mouse_filter = 0
+custom_fonts/font = ExtResource( 3 )
+
+[node name="Installed" type="Panel" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -46.0
+margin_top = 5.0
+margin_right = -10.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "This mod is installed"
+custom_styles/panel = SubResource( 8 )
+
+[node name="TextureRect" type="TextureRect" parent="MainPanel/InfoPanelContainer/ModInfoPanel/Installed"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+hint_tooltip = "This mod is installed"
+texture = ExtResource( 7 )
+expand = true
+
+[node name="ServerSided" type="Panel" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -92.0
+margin_top = 5.0
+margin_right = -56.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "All players need to have this mod installed to play online."
+custom_styles/panel = SubResource( 12 )
+
+[node name="TextureRect" type="TextureRect" parent="MainPanel/InfoPanelContainer/ModInfoPanel/ServerSided"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+hint_tooltip = "All players need to have this mod installed to play online.
+"
+texture = ExtResource( 1 )
+expand = true
+
+[node name="LocalMod" type="Panel" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -138.0
+margin_top = 5.0
+margin_right = -102.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "This mod is installed locally and can only be enabled and disabled. It also won't be able to be put into bundles."
+custom_styles/panel = SubResource( 24 )
+
+[node name="TextureRect" type="TextureRect" parent="MainPanel/InfoPanelContainer/ModInfoPanel/LocalMod"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+hint_tooltip = "This mod is installed locally and can only be enabled and disabled. It also won't be able to be put into bundles."
+texture = ExtResource( 12 )
+expand = true
+
+[node name="VersionLabel" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+unique_name_in_owner = true
+margin_left = 5.0
+margin_top = 53.0
+margin_right = 77.0
+margin_bottom = 73.0
+text = "Version:"
+
+[node name="Label" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 5.0
+margin_top = 80.0
+margin_right = 80.0
+margin_bottom = 100.0
+text = "Authors:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 90.0
+margin_top = 80.0
+margin_right = 335.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 245, 20 )
+scroll_vertical_enabled = false
+
+[node name="AuthorsContainer" type="HBoxContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel/ScrollContainer"]
+unique_name_in_owner = true
+margin_bottom = 20.0
+custom_constants/separation = 5
+
+[node name="Label" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel/ScrollContainer/AuthorsContainer"]
+margin_bottom = 20.0
+
+[node name="Label2" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 5.0
+margin_top = 107.0
+margin_right = 134.0
+margin_bottom = 127.0
+text = "Dependencies:"
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 10.0
+margin_top = 132.0
+margin_right = 345.0
+margin_bottom = 258.0
+rect_min_size = Vector2( 117, 66 )
+
+[node name="DependenciesContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel/ScrollContainer2"]
+unique_name_in_owner = true
+margin_right = 117.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 117, 66 )
+mouse_filter = 2
+theme = SubResource( 9 )
+
+[node name="Label3" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 5.0
+margin_top = 268.0
+margin_right = 134.0
+margin_bottom = 288.0
+text = "Description:"
+
+[node name="Description" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+unique_name_in_owner = true
+margin_left = 10.0
+margin_top = 293.0
+margin_right = 345.0
+margin_bottom = 447.0
+autowrap = true
+clip_text = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 309.0
+margin_top = 492.0
+margin_right = 402.0
+margin_bottom = 518.0
+grow_vertical = 0
+alignment = 1
+
+[node name="DeleteButton" type="Button" parent="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_top = 3.0
+margin_right = 93.0
+margin_bottom = 23.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Delete]"
+
+[node name="InstallButton" type="Button" parent="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_top = 24.0
+margin_right = 93.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Install]"
+
+[node name="DisableButton" type="Button" parent="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Disable]"
+
+[node name="UpdateModButton" type="Button" parent="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Update]"
+
+[node name="EnableButton" type="Button" parent="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Enable]"
+
+[node name="UninstallButton" type="Button" parent="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_top = 3.0
+margin_right = 93.0
+margin_bottom = 23.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Uninstall]"
+
+[node name="CurrentlyInstalledVersion" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -33.0
+margin_right = 185.0
+margin_bottom = -13.0
+text = "Currently Installed: v"
+
+[node name="BundleInfoPanel" type="Panel" parent="MainPanel/InfoPanelContainer"]
+unique_name_in_owner = true
+visible = false
+margin_left = 609.0
+margin_top = 62.0
+margin_right = 1014.0
+margin_bottom = 590.0
+theme = ExtResource( 2 )
+custom_styles/panel = SubResource( 7 )
+
+[node name="Panel" type="Panel" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+margin_left = 4.0
+margin_top = 9.0
+margin_right = 302.0
+margin_bottom = 53.0
+rect_clip_content = true
+custom_styles/panel = SubResource( 11 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -149.0
+margin_right = 149.0
+margin_bottom = 32.0
+scroll_vertical_enabled = false
+
+[node name="BundleName" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/Panel/ScrollContainer"]
+unique_name_in_owner = true
+margin_bottom = 32.0
+mouse_filter = 0
+custom_fonts/font = ExtResource( 3 )
+
+[node name="BundleInstalled" type="Panel" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -46.0
+margin_top = 5.0
+margin_right = -10.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "This mod is installed"
+custom_styles/panel = SubResource( 8 )
+
+[node name="TextureRect" type="TextureRect" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/BundleInstalled"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+hint_tooltip = "This mod is installed"
+texture = ExtResource( 7 )
+expand = true
+
+[node name="BundleVersionLabel" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+unique_name_in_owner = true
+margin_left = 5.0
+margin_top = 53.0
+margin_right = 77.0
+margin_bottom = 73.0
+text = "Version:"
+
+[node name="Label" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+margin_left = 5.0
+margin_top = 80.0
+margin_right = 80.0
+margin_bottom = 100.0
+text = "Authors:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+margin_left = 90.0
+margin_top = 80.0
+margin_right = 335.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 245, 20 )
+scroll_vertical_enabled = false
+
+[node name="BundleAuthorsContainer" type="HBoxContainer" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/ScrollContainer"]
+unique_name_in_owner = true
+margin_bottom = 20.0
+custom_constants/separation = 5
+
+[node name="Label" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/ScrollContainer/BundleAuthorsContainer"]
+margin_bottom = 20.0
+
+[node name="Label2" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+margin_left = 5.0
+margin_top = 107.0
+margin_right = 134.0
+margin_bottom = 127.0
+text = "Mods:"
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+margin_left = 10.0
+margin_top = 132.0
+margin_right = 345.0
+margin_bottom = 258.0
+rect_min_size = Vector2( 117, 66 )
+
+[node name="ModsContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/ScrollContainer2"]
+unique_name_in_owner = true
+margin_right = 117.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 117, 66 )
+mouse_filter = 2
+theme = SubResource( 9 )
+
+[node name="Label3" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+margin_left = 5.0
+margin_top = 268.0
+margin_right = 134.0
+margin_bottom = 288.0
+text = "Description:"
+
+[node name="BundleDescription" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+unique_name_in_owner = true
+margin_left = 10.0
+margin_top = 293.0
+margin_right = 345.0
+margin_bottom = 447.0
+autowrap = true
+clip_text = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+margin_left = 309.0
+margin_top = 492.0
+margin_right = 402.0
+margin_bottom = 518.0
+grow_vertical = 0
+alignment = 1
+
+[node name="BundleDeleteButton" type="Button" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_top = 24.0
+margin_right = 93.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Delete]"
+
+[node name="BundleInstallButton" type="Button" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Install]"
+
+[node name="BundleDisableButton" type="Button" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Disable]"
+
+[node name="UpdateBundleButton" type="Button" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Update]"
+
+[node name="BundleEnableButton" type="Button" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Enable]"
+
+[node name="BundleUninstallButton" type="Button" parent="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_top = 3.0
+margin_right = 93.0
+margin_bottom = 23.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Uninstall]"
+
+[node name="BundleCurrentlyInstalledVersion" type="Label" parent="MainPanel/InfoPanelContainer/BundleInfoPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -33.0
+margin_right = 185.0
+margin_bottom = -13.0
+text = "Currently Installed: v"
+
+[node name="ModProfileInfoPanel" type="Panel" parent="MainPanel/InfoPanelContainer"]
+unique_name_in_owner = true
+margin_left = 609.0
+margin_top = 62.0
+margin_right = 1014.0
+margin_bottom = 590.0
+theme = ExtResource( 2 )
+custom_styles/panel = SubResource( 7 )
+
+[node name="Panel" type="Panel" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel"]
+margin_left = 4.0
+margin_top = 9.0
+margin_right = 302.0
+margin_bottom = 41.0
+rect_clip_content = true
+custom_styles/panel = SubResource( 11 )
+
+[node name="ProfileName" type="Label" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/Panel"]
+unique_name_in_owner = true
+margin_left = 1.0
+margin_right = 353.0
+margin_bottom = 32.0
+mouse_filter = 0
+custom_fonts/font = ExtResource( 3 )
+text = "Profile Name"
+
+[node name="Label" type="Label" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel"]
+margin_left = 5.0
+margin_top = 75.0
+margin_right = 80.0
+margin_bottom = 95.0
+text = "Authors:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel"]
+margin_left = 90.0
+margin_top = 75.0
+margin_right = 335.0
+margin_bottom = 95.0
+rect_min_size = Vector2( 245, 20 )
+scroll_vertical_enabled = false
+
+[node name="ProfileAuthorsContainer" type="HBoxContainer" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/ScrollContainer"]
+unique_name_in_owner = true
+margin_bottom = 20.0
+custom_constants/separation = 5
+
+[node name="Label" type="Label" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/ScrollContainer/ProfileAuthorsContainer"]
+margin_bottom = 20.0
+
+[node name="Label2" type="Label" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel"]
+margin_left = 5.0
+margin_top = 107.0
+margin_right = 134.0
+margin_bottom = 127.0
+text = "Mods:"
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel"]
+margin_left = 10.0
+margin_top = 132.0
+margin_right = 345.0
+margin_bottom = 257.0
+rect_min_size = Vector2( 117, 66 )
+
+[node name="ProfileModsContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/ScrollContainer2"]
+unique_name_in_owner = true
+margin_right = 117.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 117, 66 )
+mouse_filter = 2
+theme = SubResource( 9 )
+
+[node name="Label3" type="Label" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel"]
+margin_left = 5.0
+margin_top = 262.0
+margin_right = 134.0
+margin_bottom = 282.0
+text = "Bundles:"
+
+[node name="ScrollContainer3" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel"]
+margin_left = 10.0
+margin_top = 287.0
+margin_right = 345.0
+margin_bottom = 412.0
+rect_min_size = Vector2( 117, 66 )
+
+[node name="ProfileBundlesContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/ScrollContainer3"]
+unique_name_in_owner = true
+margin_right = 117.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 117, 66 )
+mouse_filter = 2
+theme = SubResource( 9 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel"]
+margin_left = 309.0
+margin_top = 492.0
+margin_right = 402.0
+margin_bottom = 518.0
+grow_vertical = 0
+alignment = 1
+
+[node name="ProfileDisableButton" type="Button" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Disable]"
+
+[node name="ProfileUpdateModButton" type="Button" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Update]"
+
+[node name="ProfileEnableButton" type="Button" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Enable]"
+
+[node name="ProfileExportButton" type="Button" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+margin_right = 93.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Export]"
+
+[node name="ProfileDeleteButton" type="Button" parent="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 24.0
+margin_right = 93.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0.494118, 0.745098, 0.980392, 1 )
+custom_styles/normal = SubResource( 10 )
+text = "[Delete]"
+
+[node name="ModIsDependency" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -270.5
+margin_top = -123.5
+margin_right = 270.5
+margin_bottom = 123.5
+script = ExtResource( 5 )
+
+[node name="ModIsDependencyLabel" type="Label" parent="MainPanel/ModIsDependency"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -267.5
+margin_top = -122.5
+margin_right = 216.5
+margin_bottom = 88.5
+autowrap = true
+
+[node name="CloseButton" type="Button" parent="MainPanel/ModIsDependency"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="UninstallAnywaysButton" type="Button" parent="MainPanel/ModIsDependency"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -176.0
+margin_top = -31.0
+margin_right = -5.0
+margin_bottom = -5.0
+text = "Uninstall Anyways"
+
+[node name="DisableAnywaysButton" type="Button" parent="MainPanel/ModIsDependency"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -176.0
+margin_top = -31.0
+margin_right = -5.0
+margin_bottom = -5.0
+text = "Disable Anyways"
+
+[node name="ModIsIncompatible" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -270.5
+margin_top = -123.5
+margin_right = 270.5
+margin_bottom = 123.5
+script = ExtResource( 5 )
+
+[node name="ModIsIncompatibleLabel" type="Label" parent="MainPanel/ModIsIncompatible"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -267.5
+margin_top = -122.5
+margin_right = 216.5
+margin_bottom = 88.5
+autowrap = true
+
+[node name="CloseIncompatibleButton" type="Button" parent="MainPanel/ModIsIncompatible"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="EnableAnyways" type="Button" parent="MainPanel/ModIsIncompatible"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -176.0
+margin_top = -31.0
+margin_right = -5.0
+margin_bottom = -5.0
+text = "Enable Anyways"
+
+[node name="EnableAnywaysBundle" type="Button" parent="MainPanel/ModIsIncompatible"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -176.0
+margin_top = -31.0
+margin_right = -5.0
+margin_bottom = -5.0
+text = "Enable Anyways"
+
+[node name="SelectYomiLocation" type="FileDialog" parent="MainPanel"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -403.5
+margin_top = -204.0
+margin_right = 403.5
+margin_bottom = 204.0
+theme = ExtResource( 10 )
+popup_exclusive = true
+window_title = "Select \"YourOnlyMoveIsHUSTLE.exe\""
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "YourOnlyMoveIsHUSTLE.exe" )
+show_hidden_files = true
+
+[node name="SelectModZip" type="FileDialog" parent="MainPanel"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -403.5
+margin_top = -204.0
+margin_right = 403.5
+margin_bottom = 204.0
+theme = ExtResource( 10 )
+popup_exclusive = true
+window_title = "Select your mod.zip file"
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.zip" )
+show_hidden_files = true
+
+[node name="SelectProfileFile" type="FileDialog" parent="MainPanel"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -403.5
+margin_top = -204.0
+margin_right = 403.5
+margin_bottom = 204.0
+theme = ExtResource( 10 )
+popup_exclusive = true
+window_title = "Select a profile .json file"
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.json" )
+show_hidden_files = true
+
+[node name="SelectProfileExport" type="FileDialog" parent="MainPanel"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -403.5
+margin_top = -204.0
+margin_right = 403.5
+margin_bottom = 204.0
+theme = ExtResource( 10 )
+popup_exclusive = true
+window_title = "Choose a location"
+resizable = true
+mode_overrides_title = false
+mode = 2
+access = 2
+show_hidden_files = true
+
+[node name="UploadModPanel" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -212.5
+margin_top = -64.5
+margin_right = 212.5
+margin_bottom = 64.5
+
+[node name="ExitUploadButton" type="Button" parent="MainPanel/UploadModPanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="Label" type="Label" parent="MainPanel/UploadModPanel"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 50.0
+margin_bottom = 30.0
+hint_tooltip = "The passphrase for the mod you are uploading. If this is a first time upload, this sets the passphrase."
+mouse_filter = 0
+text = "Passphrase:"
+
+[node name="ModPassphraseEdit" type="LineEdit" parent="MainPanel/UploadModPanel"]
+unique_name_in_owner = true
+margin_left = 131.0
+margin_top = 5.0
+margin_right = 355.0
+margin_bottom = 35.0
+hint_tooltip = "The passphrase for the mod you are uploading. If this is a first time upload, this sets the passphrase."
+secret = true
+placeholder_text = "Mod passphrase"
+
+[node name="Label3" type="Label" parent="MainPanel/UploadModPanel"]
+margin_left = 10.5
+margin_top = 46.5
+margin_right = 77.5
+margin_bottom = 66.5
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "Your metadata  file must be proper JSON 
+this means no comma before the end bracket"
+align = 1
+
+[node name="Label2" type="Label" parent="MainPanel/UploadModPanel"]
+margin_left = 10.5
+margin_top = 98.5
+margin_right = 77.5
+margin_bottom = 118.5
+text = "Mod zip:"
+
+[node name="ChooseModZipButton" type="Button" parent="MainPanel/UploadModPanel"]
+unique_name_in_owner = true
+margin_left = 92.0
+margin_top = 96.0
+margin_right = 271.0
+margin_bottom = 122.0
+text = "Choose file"
+clip_text = true
+
+[node name="UploadModButton" type="Button" parent="MainPanel/UploadModPanel"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -76.0
+margin_top = -32.0
+margin_right = -5.0
+margin_bottom = -6.0
+text = "Upload"
+
+[node name="UploadBundlePanel" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -359.0
+margin_top = -181.0
+margin_right = 256.0
+margin_bottom = 182.0
+
+[node name="ExitBundleUploadButton" type="Button" parent="MainPanel/UploadBundlePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="Label" type="Label" parent="MainPanel/UploadBundlePanel"]
+margin_left = 10.0
+margin_top = 56.0
+margin_right = 122.0
+margin_bottom = 76.0
+hint_tooltip = "The passphrase for the mod you are uploading. If this is a first time upload, this sets the passphrase."
+mouse_filter = 0
+text = "Passphrase:"
+
+[node name="Label3" type="Label" parent="MainPanel/UploadBundlePanel"]
+margin_left = 10.0
+margin_top = 85.0
+margin_right = 122.0
+margin_bottom = 105.0
+mouse_filter = 0
+text = "Select Mods:"
+
+[node name="Label4" type="Label" parent="MainPanel/UploadBundlePanel"]
+margin_left = 10.0
+margin_top = 248.0
+margin_right = 122.0
+margin_bottom = 268.0
+mouse_filter = 0
+text = "Description:"
+
+[node name="Label5" type="Label" parent="MainPanel/UploadBundlePanel"]
+margin_left = 359.5
+margin_top = 257.5
+margin_right = 432.5
+margin_bottom = 277.5
+mouse_filter = 0
+text = "Version:"
+
+[node name="Label6" type="Label" parent="MainPanel/UploadBundlePanel"]
+margin_left = 253.0
+margin_top = 301.0
+margin_right = 433.0
+margin_bottom = 322.0
+hint_tooltip = "The server passphrase to upload bundles. Contact Steven4547466#1407 for this."
+mouse_filter = 0
+text = "Server Passphrase:"
+
+[node name="BundlePassphraseEdit" type="LineEdit" parent="MainPanel/UploadBundlePanel"]
+unique_name_in_owner = true
+margin_left = 131.0
+margin_top = 51.0
+margin_right = 355.0
+margin_bottom = 81.0
+hint_tooltip = "The passphrase for the mod you are uploading. If this is a first time upload, this sets the passphrase."
+secret = true
+placeholder_text = "Bundle passphrase"
+
+[node name="BundlePassphraseEdit2" type="LineEdit" parent="MainPanel/UploadBundlePanel"]
+unique_name_in_owner = true
+margin_left = 434.0
+margin_top = 294.0
+margin_right = 610.0
+margin_bottom = 324.0
+hint_tooltip = "The server passphrase to upload bundles. Contact Steven4547466#1407 for this."
+secret = true
+placeholder_text = "Server Passphrase"
+
+[node name="Label2" type="Label" parent="MainPanel/UploadBundlePanel"]
+margin_left = 10.0
+margin_top = 15.0
+margin_right = 122.0
+margin_bottom = 35.0
+mouse_filter = 0
+text = "Bundle Name:"
+
+[node name="BundleUploadName" type="LineEdit" parent="MainPanel/UploadBundlePanel"]
+unique_name_in_owner = true
+margin_left = 131.0
+margin_top = 10.0
+margin_right = 355.0
+margin_bottom = 40.0
+placeholder_text = "Bundle name"
+
+[node name="UploadBundleButton" type="Button" parent="MainPanel/UploadBundlePanel"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -76.0
+margin_top = -32.0
+margin_right = -5.0
+margin_bottom = -6.0
+text = "Upload"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/UploadBundlePanel"]
+margin_left = 191.0
+margin_top = 84.0
+margin_right = 472.0
+margin_bottom = 243.0
+rect_min_size = Vector2( 281, 159 )
+scroll_horizontal_enabled = false
+
+[node name="BundleUploadModsList" type="VBoxContainer" parent="MainPanel/UploadBundlePanel/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 281.0
+rect_min_size = Vector2( 281, 0 )
+
+[node name="BundleUploadDescriptionEdit" type="TextEdit" parent="MainPanel/UploadBundlePanel"]
+unique_name_in_owner = true
+margin_left = 10.0
+margin_top = 269.0
+margin_right = 230.0
+margin_bottom = 336.0
+
+[node name="BundleUploadVersionEdit" type="LineEdit" parent="MainPanel/UploadBundlePanel"]
+unique_name_in_owner = true
+margin_left = 434.0
+margin_top = 253.0
+margin_right = 610.0
+margin_bottom = 283.0
+text = "1.0.0"
+
+[node name="BundleUploadSearchBar" type="LineEdit" parent="MainPanel/UploadBundlePanel"]
+unique_name_in_owner = true
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -71.5
+margin_right = 185.0
+margin_bottom = -41.5
+placeholder_text = "Search"
+
+[node name="CreateProfilePanel" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -255.5
+margin_top = -234.0
+margin_right = 255.5
+margin_bottom = 234.0
+
+[node name="ExitProfileCreator" type="Button" parent="MainPanel/CreateProfilePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="Label3" type="Label" parent="MainPanel/CreateProfilePanel"]
+margin_left = 10.0
+margin_top = 85.0
+margin_right = 122.0
+margin_bottom = 105.0
+mouse_filter = 0
+text = "Select Mods:"
+
+[node name="Label2" type="Label" parent="MainPanel/CreateProfilePanel"]
+margin_left = 10.0
+margin_top = 15.0
+margin_right = 122.0
+margin_bottom = 35.0
+mouse_filter = 0
+text = "Profile Name:"
+
+[node name="ProfileCreatorProfileName" type="LineEdit" parent="MainPanel/CreateProfilePanel"]
+unique_name_in_owner = true
+margin_left = 131.0
+margin_top = 10.0
+margin_right = 355.0
+margin_bottom = 40.0
+placeholder_text = "Profile name"
+
+[node name="CreateProfileButton" type="Button" parent="MainPanel/CreateProfilePanel"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -76.0
+margin_top = -32.0
+margin_right = -5.0
+margin_bottom = -6.0
+text = "Create"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/CreateProfilePanel"]
+margin_left = 191.0
+margin_top = 84.0
+margin_right = 472.0
+margin_bottom = 243.0
+rect_min_size = Vector2( 281, 159 )
+scroll_horizontal_enabled = false
+
+[node name="ProfileCreatorModsList" type="VBoxContainer" parent="MainPanel/CreateProfilePanel/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 281.0
+rect_min_size = Vector2( 281, 0 )
+
+[node name="ProfileCreatorSearchBar" type="LineEdit" parent="MainPanel/CreateProfilePanel"]
+unique_name_in_owner = true
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -119.5
+margin_right = 185.0
+margin_bottom = -89.5
+placeholder_text = "Search"
+
+[node name="Label4" type="Label" parent="MainPanel/CreateProfilePanel"]
+margin_left = 10.0
+margin_top = 254.0
+margin_right = 122.0
+margin_bottom = 274.0
+mouse_filter = 0
+text = "Select Bundles:"
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="MainPanel/CreateProfilePanel"]
+margin_left = 191.0
+margin_top = 253.0
+margin_right = 472.0
+margin_bottom = 412.0
+rect_min_size = Vector2( 281, 159 )
+scroll_horizontal_enabled = false
+
+[node name="ProfileCreatorBundlesList" type="VBoxContainer" parent="MainPanel/CreateProfilePanel/ScrollContainer2"]
+unique_name_in_owner = true
+margin_right = 281.0
+rect_min_size = Vector2( 281, 0 )
+
+[node name="ProfileCreatorBundleSearchBar" type="LineEdit" parent="MainPanel/CreateProfilePanel"]
+unique_name_in_owner = true
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = 49.5
+margin_right = 185.0
+margin_bottom = 79.5
+placeholder_text = "Search"
+
+[node name="Panel" type="Panel" parent="MainPanel/CreateProfilePanel"]
+margin_top = 243.0
+margin_right = 511.0
+margin_bottom = 253.0
+custom_styles/panel = SubResource( 21 )
+
+[node name="ImportProfileButton" type="Button" parent="MainPanel/CreateProfilePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -117.0
+margin_top = 12.0
+margin_right = -46.0
+margin_bottom = 38.0
+text = "Import"
+
+[node name="UploadMessageContainer" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -212.5
+margin_top = -64.5
+margin_right = 212.5
+margin_bottom = 64.5
+
+[node name="ExitUploadMessageButton" type="Button" parent="MainPanel/UploadMessageContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="UploadMessage" type="Label" parent="MainPanel/UploadMessageContainer"]
+unique_name_in_owner = true
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 388.0
+margin_bottom = 124.0
+mouse_filter = 0
+autowrap = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainPanel"]
+margin_left = 35.0
+margin_top = 535.0
+margin_right = 75.0
+margin_bottom = 575.0
+
+[node name="Offline" type="Panel" parent="MainPanel/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Mod manager server offline. New mods will not be able to be installed"
+custom_styles/panel = SubResource( 15 )
+
+[node name="TextureRect" type="TextureRect" parent="MainPanel/HBoxContainer/Offline"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 9 )
+
+[node name="HelpButton" type="Panel" parent="MainPanel/HBoxContainer"]
+unique_name_in_owner = true
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Help"
+custom_styles/panel = SubResource( 22 )
+
+[node name="TextureRect" type="TextureRect" parent="MainPanel/HBoxContainer/HelpButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 11 )
+expand = true
+
+[node name="HelpPopup" type="AcceptDialog" parent="MainPanel"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -402.0
+margin_top = -223.5
+margin_right = 402.0
+margin_bottom = 223.5
+theme = ExtResource( 10 )
+window_title = "Help"
+dialog_autowrap = true
+
+[node name="Panel" type="Panel" parent="MainPanel/HelpPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -44.0
+custom_styles/panel = SubResource( 23 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainPanel/HelpPopup/Panel"]
+margin_right = 794.0
+margin_bottom = 399.0
+rect_min_size = Vector2( 794, 399 )
+bbcode_enabled = true
+bbcode_text = "[center][img=100]res://icon.png[/img]
+Welcome to Yomi Mod Manager![/center]
+
+Yomi Mod Manager is a program that consolidates and manages your Your Only Move Is Hustle mods. It automatically handles dependency resolution, makes updating easy, and provides an easy way to change which mods you have enabled using profiles.
+
+Mods are uploaded by developers and will show up under the \"[color=#ff0000]All Mods[/color]\" tab. This tab will include both mods you have and have not downloaded.
+
+Click on a mod from the list in the middle to show info about it on the right. From the menu on the right, you also multiple options.
+
+Yomi Mod Manager can handle enabling and disabling specific mods so that you don't have to go into the files and delete them and keep copies somewhere.
+
+You can filter out mods that aren't installed by clicking on the \"[color=#ff0000]Installed Mods[/color]\" tab. This tab has all the options of the All Mods tab, but allows you to filter out any that you don't have.
+
+Mod Bundles, which can be accessed via the \"[color=#ff0000]Mod Bundles[/color]\" tab are uploaded by anyone and contains a set of mods. Installing a mod bundle will install all the mods listed, as well as any dependencies they have.
+
+Like mods, you can filter out bundles that aren't installed by clicking on the \"[color=#ff0000]Installed Mod Bundles[/color]\" tab.
+
+Finally, Yomi Mod Manager also allows you to create mod profiles. Profiles are user created packs of mods and bundles. Mod profiles allow for quick switching between which profile you're on. Only one profile can be active at a time. 
+
+All dependencies of any mods (or bundles) in the profile will also be installed, so you don't need to add them manually.
+
+[center][color=#ff0000]FOR DEVELOPERS[/color][/center]
+
+Mod uploading:
+
+Mod uploading can be done from either the All Mods tab, or the Installed Mods tab. Uploading a mod is simple, all you need to do is choose a passphrase (more info on that below) and the mod zip file and click upload. [color=#ff0000]_metadata files MUST be in the proper JSON format. This means they cannot have a trailing slash before the closing bracket. The template mod adds this for some reason, get rid of it![/color].
+
+Updating mods is as simple as repeating the process with the same passphrase. Make sure to update your version in your metadata or clients won't recognize it was updated.
+
+Bundle uploading:
+
+Uploading bundles can be done from the All Bundles or the Installed Bundles tab. Uploading a bundle is simpler than a mod as all you need to do is choose the mods from the list given to you, give the bundle a name, and a passphrase then press upload, the rest is done for you.
+
+Mods in bundles [color=#ff0000]MUST[/color] be uploaded to the mod manager in order to show up on the list of mods to choose from. Mods [color=red]cannot[/color] depend on bundles (yet).
+
+Updating bundles is as simple as repeating the process with the same passphrase. Make sure to update the version number as well.
+
+Passphrases (Mods and Bundles):
+
+Passphrases are Yomi Mod Manager's way of protecting developers. The first time you upload a mod, you have to choose a passphrase that must be added alongside every subsequent upload. This means that if anyone tries to update your mod on the list, they will need your passphrase.
+
+[center][img=400]res://icon.png[/img][/center]"
+text = "
+Welcome to Yomi Mod Manager!
+
+Yomi Mod Manager is a program that consolidates and manages your Your Only Move Is Hustle mods. It automatically handles dependency resolution, makes updating easy, and provides an easy way to change which mods you have enabled using profiles.
+
+Mods are uploaded by developers and will show up under the \"All Mods\" tab. This tab will include both mods you have and have not downloaded.
+
+Click on a mod from the list in the middle to show info about it on the right. From the menu on the right, you also multiple options.
+
+Yomi Mod Manager can handle enabling and disabling specific mods so that you don't have to go into the files and delete them and keep copies somewhere.
+
+You can filter out mods that aren't installed by clicking on the \"Installed Mods\" tab. This tab has all the options of the All Mods tab, but allows you to filter out any that you don't have.
+
+Mod Bundles, which can be accessed via the \"Mod Bundles\" tab are uploaded by anyone and contains a set of mods. Installing a mod bundle will install all the mods listed, as well as any dependencies they have.
+
+Like mods, you can filter out bundles that aren't installed by clicking on the \"Installed Mod Bundles\" tab.
+
+Finally, Yomi Mod Manager also allows you to create mod profiles. Profiles are user created packs of mods and bundles. Mod profiles allow for quick switching between which profile you're on. Only one profile can be active at a time. 
+
+All dependencies of any mods (or bundles) in the profile will also be installed, so you don't need to add them manually.
+
+FOR DEVELOPERS
+
+Mod uploading:
+
+Mod uploading can be done from either the All Mods tab, or the Installed Mods tab. Uploading a mod is simple, all you need to do is choose a passphrase (more info on that below) and the mod zip file and click upload. _metadata files MUST be in the proper JSON format. This means they cannot have a trailing slash before the closing bracket. The template mod adds this for some reason, get rid of it!.
+
+Updating mods is as simple as repeating the process with the same passphrase. Make sure to update your version in your metadata or clients won't recognize it was updated.
+
+Bundle uploading:
+
+Uploading bundles can be done from the All Bundles or the Installed Bundles tab. Uploading a bundle is simpler than a mod as all you need to do is choose the mods from the list given to you, give the bundle a name, and a passphrase then press upload, the rest is done for you.
+
+Mods in bundles MUST be uploaded to the mod manager in order to show up on the list of mods to choose from. Mods cannot depend on bundles (yet).
+
+Updating bundles is as simple as repeating the process with the same passphrase. Make sure to update the version number as well.
+
+Passphrases (Mods and Bundles):
+
+Passphrases are Yomi Mod Manager's way of protecting developers. The first time you upload a mod, you have to choose a passphrase that must be added alongside every subsequent upload. This means that if anyone tries to update your mod on the list, they will need your passphrase.
+
+"
+
+[node name="SelectYomiInstallLocation" type="Button" parent="MainPanel/HelpPopup/Panel"]
+unique_name_in_owner = true
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = 8.0
+margin_right = 228.0
+margin_bottom = 36.0
+text = "Select Y.O.M.I Location"
+
+[node name="OpenSettings" type="Button" parent="MainPanel/HelpPopup/Panel"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -112.0
+margin_top = 8.0
+margin_right = 1.0
+margin_bottom = 36.0
+text = "Settings"
+
+[node name="DeleteModDialog" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -246.5
+margin_top = -128.0
+margin_right = 246.5
+margin_bottom = 128.0
+
+[node name="Label" type="Label" parent="MainPanel/DeleteModDialog"]
+margin_left = 6.0
+margin_top = 31.0
+margin_right = 488.0
+margin_bottom = 143.0
+text = "This is for mod developers to delete their mod from the mod manager.
+
+If you are a user trying to uninstall the mod, use the uninstall button."
+autowrap = true
+
+[node name="ExitDeleteModDialog" type="Button" parent="MainPanel/DeleteModDialog"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="Label2" type="Label" parent="MainPanel/DeleteModDialog"]
+margin_left = 5.5
+margin_top = 209.0
+margin_right = 117.5
+margin_bottom = 229.0
+text = "Passphrase:"
+
+[node name="DeleteModPassphrase" type="LineEdit" parent="MainPanel/DeleteModDialog"]
+unique_name_in_owner = true
+margin_left = 131.0
+margin_top = 204.0
+margin_right = 304.0
+margin_bottom = 234.0
+secret = true
+
+[node name="DeleteModButton" type="Button" parent="MainPanel/DeleteModDialog"]
+margin_left = 357.5
+margin_top = 206.0
+margin_right = 424.5
+margin_bottom = 232.0
+text = "Delete"
+
+[node name="DeleteBundleDialog" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -246.5
+margin_top = -128.0
+margin_right = 246.5
+margin_bottom = 128.0
+
+[node name="Label" type="Label" parent="MainPanel/DeleteBundleDialog"]
+margin_left = 6.0
+margin_top = 31.0
+margin_right = 488.0
+margin_bottom = 143.0
+text = "This is for mod developers to delete their bundle from the mod manager.
+
+If you are a user trying to uninstall the bundle, use the uninstall button."
+autowrap = true
+
+[node name="ExitDeleteBundleDialog" type="Button" parent="MainPanel/DeleteBundleDialog"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="Label2" type="Label" parent="MainPanel/DeleteBundleDialog"]
+margin_left = 5.5
+margin_top = 209.0
+margin_right = 117.5
+margin_bottom = 229.0
+text = "Passphrase:"
+
+[node name="DeleteBundlePassphrase" type="LineEdit" parent="MainPanel/DeleteBundleDialog"]
+unique_name_in_owner = true
+margin_left = 131.0
+margin_top = 204.0
+margin_right = 304.0
+margin_bottom = 234.0
+secret = true
+
+[node name="DeleteBundleButton" type="Button" parent="MainPanel/DeleteBundleDialog"]
+margin_left = 357.5
+margin_top = 206.0
+margin_right = 424.5
+margin_bottom = 232.0
+text = "Delete"
+
+[node name="SettingsMenu" type="AcceptDialog" parent="MainPanel"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -288.0
+margin_top = -228.5
+margin_right = 288.0
+margin_bottom = 228.5
+theme = ExtResource( 10 )
+window_title = "Settings"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/SettingsMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -283.0
+margin_top = -221.5
+margin_right = 283.0
+margin_bottom = 187.5
+rect_min_size = Vector2( 566, 409 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/SettingsMenu/ScrollContainer"]
+margin_right = 566.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 566, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainPanel/SettingsMenu/ScrollContainer/VBoxContainer"]
+margin_right = 566.0
+margin_bottom = 40.0
+alignment = 1
+
+[node name="Label" type="Label" parent="MainPanel/SettingsMenu/ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 153.0
+margin_top = 9.0
+margin_right = 333.0
+margin_bottom = 31.0
+text = "Auto Update Client:"
+
+[node name="AutoUpdateClient" type="CheckButton" parent="MainPanel/SettingsMenu/ScrollContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 337.0
+margin_right = 413.0
+margin_bottom = 40.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainPanel/SettingsMenu/ScrollContainer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 566.0
+margin_bottom = 84.0
+alignment = 1
+
+[node name="Label" type="Label" parent="MainPanel/SettingsMenu/ScrollContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 153.0
+margin_top = 9.0
+margin_right = 333.0
+margin_bottom = 31.0
+text = "Auto Update Mods:"
+
+[node name="AutoUpdateMods" type="CheckButton" parent="MainPanel/SettingsMenu/ScrollContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+margin_left = 337.0
+margin_right = 413.0
+margin_bottom = 40.0
+
+[node name="UpdateAvailable" type="WindowDialog" parent="."]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -398.0
+margin_top = -35.5
+margin_right = 398.0
+margin_bottom = 35.5
+theme = ExtResource( 10 )
+popup_exclusive = true
+window_title = "Update Available!"
+
+[node name="UpdateClientButton" type="LinkButton" parent="UpdateAvailable"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -344.0
+margin_top = -11.0
+margin_right = 344.0
+margin_bottom = 11.0
+custom_colors/font_color = Color( 0, 0, 1, 1 )
+text = "An update is available. Click Here to automatically download the update."
+
+[connection signal="gui_input" from="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/AllModsTab" to="MainPanel" method="_on_AllModsTab_gui_input"]
+[connection signal="gui_input" from="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/InstalledModsTab" to="MainPanel" method="_on_InstalledModsTab_gui_input"]
+[connection signal="gui_input" from="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/BundlesTab" to="MainPanel" method="_on_ModBundlesTab_gui_input"]
+[connection signal="gui_input" from="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/InstalledBundlesTab" to="MainPanel" method="_on_InstalledModBundles_gui_input"]
+[connection signal="gui_input" from="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/ModProfilesTab" to="MainPanel" method="_on_ModProfilesTab_gui_input"]
+[connection signal="text_changed" from="MainPanel/Panel2/SearchBar" to="MainPanel" method="_on_SearchBar_text_changed"]
+[connection signal="pressed" from="MainPanel/Panel2/UploadButton" to="MainPanel" method="_on_UploadButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/DeleteButton" to="MainPanel" method="_on_DeleteButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/InstallButton" to="MainPanel" method="_on_InstallButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/DisableButton" to="MainPanel" method="_on_DisableButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/UpdateModButton" to="MainPanel" method="_on_UpdateModButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/EnableButton" to="MainPanel" method="_on_EnableButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/UninstallButton" to="MainPanel" method="_on_UninstallButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer/BundleDeleteButton" to="MainPanel" method="_on_BundleDeleteButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer/BundleInstallButton" to="MainPanel" method="_on_BundleInstallButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer/BundleDisableButton" to="MainPanel" method="_on_BundleDisableButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer/UpdateBundleButton" to="MainPanel" method="_on_UpdateBundleButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer/BundleEnableButton" to="MainPanel" method="_on_BundleEnableButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/BundleInfoPanel/VBoxContainer/BundleUninstallButton" to="MainPanel" method="_on_BundleUninstallButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer/ProfileDisableButton" to="MainPanel" method="_on_ProfileDisableButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer/ProfileUpdateModButton" to="MainPanel" method="_on_ProfileUpdateModButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer/ProfileEnableButton" to="MainPanel" method="_on_ProfileEnableButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer/ProfileExportButton" to="MainPanel" method="_on_ProfileExportButton_pressed"]
+[connection signal="pressed" from="MainPanel/InfoPanelContainer/ModProfileInfoPanel/VBoxContainer/ProfileDeleteButton" to="MainPanel" method="_on_ProfileDeleteButton_pressed"]
+[connection signal="pressed" from="MainPanel/ModIsDependency/CloseButton" to="MainPanel/ModIsDependency" method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="MainPanel/ModIsDependency/UninstallAnywaysButton" to="MainPanel" method="_on_UninstallAnywaysButton_pressed"]
+[connection signal="pressed" from="MainPanel/ModIsDependency/DisableAnywaysButton" to="MainPanel" method="_on_DisableAnyways_pressed"]
+[connection signal="pressed" from="MainPanel/ModIsIncompatible/CloseIncompatibleButton" to="MainPanel" method="_on_CloseIncompatibleButton_pressed"]
+[connection signal="pressed" from="MainPanel/ModIsIncompatible/EnableAnyways" to="MainPanel" method="_on_EnableAnyways_pressed"]
+[connection signal="pressed" from="MainPanel/ModIsIncompatible/EnableAnywaysBundle" to="MainPanel" method="_on_EnableAnywaysBundle_pressed"]
+[connection signal="pressed" from="MainPanel/UploadModPanel/ExitUploadButton" to="MainPanel" method="_on_ExitUploadButton_pressed"]
+[connection signal="pressed" from="MainPanel/UploadModPanel/ChooseModZipButton" to="MainPanel" method="_on_ChooseModZipButton_pressed"]
+[connection signal="pressed" from="MainPanel/UploadModPanel/UploadModButton" to="MainPanel" method="_on_UploadModButton_pressed"]
+[connection signal="pressed" from="MainPanel/UploadBundlePanel/ExitBundleUploadButton" to="MainPanel" method="_on_ExitBundleUploadButton_pressed"]
+[connection signal="pressed" from="MainPanel/UploadBundlePanel/UploadBundleButton" to="MainPanel" method="_on_UploadBundleButton_pressed"]
+[connection signal="text_changed" from="MainPanel/UploadBundlePanel/BundleUploadSearchBar" to="MainPanel" method="_on_BundleUploadSearchBar_text_changed"]
+[connection signal="pressed" from="MainPanel/CreateProfilePanel/ExitProfileCreator" to="MainPanel" method="_on_ExitProfileCreator_pressed"]
+[connection signal="pressed" from="MainPanel/CreateProfilePanel/CreateProfileButton" to="MainPanel" method="_on_CreateProfileButton_pressed"]
+[connection signal="text_changed" from="MainPanel/CreateProfilePanel/ProfileCreatorSearchBar" to="MainPanel" method="_on_ProfileCreatorSearchBar_text_changed"]
+[connection signal="text_changed" from="MainPanel/CreateProfilePanel/ProfileCreatorBundleSearchBar" to="MainPanel" method="_on_ProfileCreatorBundleSearchBar_text_changed"]
+[connection signal="pressed" from="MainPanel/CreateProfilePanel/ImportProfileButton" to="MainPanel" method="_on_ImportProfileButton_pressed"]
+[connection signal="pressed" from="MainPanel/UploadMessageContainer/ExitUploadMessageButton" to="MainPanel" method="_on_ExitUploadMessageButton_pressed"]
+[connection signal="gui_input" from="MainPanel/HBoxContainer/HelpButton" to="MainPanel" method="_on_HelpButton_gui_input"]
+[connection signal="pressed" from="MainPanel/HelpPopup/Panel/SelectYomiInstallLocation" to="MainPanel" method="_on_SelectYomiInstallLocation_pressed"]
+[connection signal="pressed" from="MainPanel/HelpPopup/Panel/OpenSettings" to="MainPanel" method="_on_OpenSettings_pressed"]
+[connection signal="pressed" from="MainPanel/DeleteModDialog/ExitDeleteModDialog" to="MainPanel" method="_on_ExitDeleteModDialog_pressed"]
+[connection signal="pressed" from="MainPanel/DeleteModDialog/DeleteModButton" to="MainPanel" method="_on_DeleteModButton_pressed"]
+[connection signal="pressed" from="MainPanel/DeleteBundleDialog/ExitDeleteBundleDialog" to="MainPanel" method="_on_ExitDeleteBundleDialog_pressed"]
+[connection signal="pressed" from="MainPanel/DeleteBundleDialog/DeleteBundleButton" to="MainPanel" method="_on_DeleteBundleButton_pressed"]
+[connection signal="toggled" from="MainPanel/SettingsMenu/ScrollContainer/VBoxContainer/HBoxContainer/AutoUpdateClient" to="MainPanel" method="_on_AutoUpdateClient_toggled"]
+[connection signal="toggled" from="MainPanel/SettingsMenu/ScrollContainer/VBoxContainer/HBoxContainer2/AutoUpdateMods" to="MainPanel" method="_on_AutoUpdateMods_toggled"]
+[connection signal="pressed" from="UpdateAvailable/UpdateClientButton" to="MainPanel" method="_on_UpdateClientButton_pressed"]
