@@ -57,6 +57,8 @@ public class Main : Panel
 		}
 	}
 
+	public static List<string> CurrentFilterTags { get; set; } = new List<string>();
+
 	public static Manifest Manifest { get; set; }
 	public static List<Mod> InstalledMods { get; set; } = new List<Mod>();
 	public static List<Bundle> InstalledBundles { get; set; } = new List<Bundle>();
@@ -693,6 +695,7 @@ public class Main : Panel
 				if (File.Exists(Path.Combine(workingPath, "buildid.txt")))
 					currentVersion = File.ReadAllText(Path.Combine(workingPath, "buildid.txt")).Trim();
 
+				wc.Encoding = Encoding.UTF8;
 				string version = wc.DownloadString($"{Paths.RootUrl}/client_version").Trim();
 				if (!string.IsNullOrEmpty(version) && currentVersion != version)
 				{
@@ -800,7 +803,32 @@ public class Main : Panel
 			}
 		}
 
+		foreach (Button button in GetNode("%TagsFilterCheckBoxContainer").GetChildren())
+		{
+			button.Connect("toggled", this, "TagFilterUpdated", new Godot.Collections.Array(button));
+		}
+
 		SetupMods();
+	}
+
+	public void TagFilterUpdated(bool pressed, Button button)
+	{
+		string tag = button.Text;
+		if (pressed)
+		{
+			CurrentFilterTags.Add(tag);
+		} 
+		else
+		{
+			CurrentFilterTags.Remove(tag);
+		}
+
+		if (SelectedTab.Name == "AllModsTab" || SelectedTab.Name == "InstalledModsTab")
+			SetupMods((GetNode("%SearchBar") as LineEdit).Text);
+		else if (SelectedTab.Name == "BundlesTab" || SelectedTab.Name == "InstalledBundlesTab")
+			SetupBundles((GetNode("%SearchBar") as LineEdit).Text);
+		else
+			SetupProfiles((GetNode("%SearchBar") as LineEdit).Text);
 	}
 
 	public void DetectLocalMods()
@@ -852,10 +880,12 @@ public class Main : Panel
 
 	public void DownloadManifest()
 	{
+		GD.Print("Downloading manifest");
 		bool shouldDownload = false;
 
 		if (File.Exists(Paths.ManifestPath))
 		{
+			GD.Print("Manifest exists");
 			string manifest = File.ReadAllText(Paths.ManifestPath);
 			Manifest = JsonConvert.DeserializeObject<Manifest>(manifest, JsonSettings);
 			if (Manifest != null)
@@ -864,6 +894,8 @@ public class Main : Panel
 				{
 					try
 					{
+						GD.Print("Getting manifest version");
+						wc.Encoding = Encoding.UTF8;
 						string version = wc.DownloadString($"{Paths.RootUrl}/manifest_version");
 						if (!string.IsNullOrEmpty(version) && Manifest.Version != version)
 						{
@@ -881,18 +913,23 @@ public class Main : Panel
 		}
 		else
 		{
+			GD.Print("Manifest doesn't exist");
 			shouldDownload = true;
 		}
 
 		if (!Offline && shouldDownload)
 		{
+			GD.Print("Attempting download");
 			using (WebClient wc = new WebClient())
 			{
 				try
 				{
+					wc.Encoding = Encoding.UTF8;
+					GD.Print("Downloading");
 					string manifest = wc.DownloadString($"{Paths.RootUrl}/mod_manifest");
 					Manifest = JsonConvert.DeserializeObject<Manifest>(manifest, JsonSettings);
 					File.WriteAllText(Paths.ManifestPath, manifest);
+					GD.Print("Written");
 				} 
 				catch (Exception ex)
 				{
@@ -966,6 +1003,12 @@ public class Main : Panel
 					continue;
 				}
 			}
+
+			if (CurrentFilterTags.Count > 0 && !mod.Tags.Any(t => CurrentFilterTags.Contains(t)))
+			{
+				continue;
+			}
+
 			PackedScene modPanel = ResourceLoader.Load("res://ModPanel.tscn") as PackedScene;
 			ModPanel panel = modPanel.Instance() as ModPanel;
 			panel.Connect("gui_input", this, "OnModClicked", new Godot.Collections.Array(panel));
@@ -1052,6 +1095,36 @@ public class Main : Panel
 					continue;
 				}
 			}
+
+			if (CurrentFilterTags.Count > 0)
+			{
+				bool skip = true;
+
+				foreach (string m in bundle.Mods)
+				{
+					Mod mod;
+					if (TryGetMod(m, out mod))
+					{
+						if (mod.Tags.Any(t => CurrentFilterTags.Contains(t)))
+						{
+							skip = false;
+							break;
+						}
+					}
+					else if (TryGetInstalledMod(m, out mod))
+					{
+						if (mod.Tags.Any(t => CurrentFilterTags.Contains(t)))
+						{
+							skip = false;
+							break;
+						}
+					}
+				}
+
+				if (skip)
+					continue;
+			}
+
 			PackedScene modPanel = ResourceLoader.Load("res://BundlePanel.tscn") as PackedScene;
 			BundlePanel panel = modPanel.Instance() as BundlePanel;
 			panel.Connect("gui_input", this, "OnBundleClicked", new Godot.Collections.Array(panel));
@@ -1099,6 +1172,61 @@ public class Main : Panel
 				{
 					continue;
 				}
+			}
+
+			if (CurrentFilterTags.Count > 0)
+			{
+				bool skip = true;
+
+				foreach (string m in profile.Mods)
+				{
+					Mod mod;
+					if (TryGetMod(m, out mod))
+					{
+						if (mod.Tags.Any(t => CurrentFilterTags.Contains(t)))
+						{
+							skip = false;
+							break;
+						}
+					}
+				}
+
+				if (skip)
+				{
+					foreach (string b in profile.Bundles)
+					{
+						if (!skip)
+							break;
+
+						if (TryGetBundle(b, out Bundle bundle))
+						{
+							foreach (string m in bundle.Mods)
+							{
+								Mod mod;
+								if (TryGetMod(m, out mod))
+								{
+									if (mod.Tags.Any(t => CurrentFilterTags.Contains(t)))
+									{
+										skip = false;
+										break;
+									}
+								}
+								else if (TryGetInstalledMod(m, out mod))
+								{
+									if (mod.Tags.Any(t => CurrentFilterTags.Contains(t)))
+									{
+										skip = false;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if (skip)
+					continue;
+
 			}
 
 			PackedScene profilePanel = ResourceLoader.Load("res://ModProfilePanel.tscn") as PackedScene;
@@ -1211,6 +1339,13 @@ public class Main : Panel
 		foreach (Node node in dependenciesContainer.GetChildren())
 		{
 			dependenciesContainer.RemoveChild(node);
+			node.QueueFree();
+		}
+
+		VBoxContainer tagsContainer = GetNode("%ModTagsContainer") as VBoxContainer;
+		foreach (Node node in tagsContainer.GetChildren())
+		{
+			tagsContainer.RemoveChild(node);
 			node.QueueFree();
 		}
 
@@ -1426,7 +1561,26 @@ public class Main : Panel
 
 				dependenciesContainer.AddChild(label);
 			}
-			
+
+			VBoxContainer tagsContainer = GetNode("%ModTagsContainer") as VBoxContainer;
+
+			if (mod.Tags.Count > 0)
+			{
+				foreach (string tag in mod.Tags)
+				{
+					Label label = new Label();
+					label.Text = tag;
+
+					tagsContainer.AddChild(label);
+				}
+			} 
+			else
+			{
+				Label label = new Label();
+				label.Text = "No tags";
+
+				tagsContainer.AddChild(label);
+			}
 
 			(GetNode("%Description") as Label).Text = Regex.Replace(mod.Description, "\\[\\/?[^\\]]*\\]", "");
 
@@ -2503,6 +2657,33 @@ public class Main : Panel
 		SetProfileCreatorBundlesList(newText);
 	}
 
+	public void _on_SelectCurrentlyEnabledModsProfile_pressed()
+	{
+		if (ProfileToCreate != null)
+		{
+			List<string> bundleMods = new List<string>();
+			foreach (Bundle bundle in InstalledBundles)
+			{
+				if (!bundle.Disabled && !ProfileToCreate.Bundles.Contains(bundle.Name))
+				{
+					ProfileToCreate.Bundles.Add(bundle.Name);
+					bundleMods.AddRange(bundle.Mods);
+				}
+			}
+
+			foreach (Mod mod in InstalledMods)
+			{
+				if (!mod.Disabled && !bundleMods.Contains(mod.Name) && !ProfileToCreate.Mods.Contains(mod.Name))
+				{
+					ProfileToCreate.Mods.Add(mod.Name);
+				}
+			}
+
+			SetProfileCreatorModsList((GetNode("%ProfileCreatorSearchBar") as LineEdit).Text);
+			SetProfileCreatorBundlesList((GetNode("%ProfileCreatorBundleSearchBar") as LineEdit).Text);
+		}
+	}
+
 
 	public void _on_CreateProfileButton_pressed()
 	{
@@ -2814,5 +2995,11 @@ public class Main : Panel
 		(GetNode("%SettingsMenu") as Popup).PopupCentered();
 		(GetNode("%AutoUpdateClient") as CheckButton).Pressed = Config.AutoUpdateClient;
 		(GetNode("%AutoUpdateMods") as CheckButton).Pressed = Config.AutoUpdateMods;
+	}
+
+	public void _on_SearchTagFilter_pressed()
+	{
+		Panel filterPanel = (GetNode("%TagsFilterContainer") as Panel);
+		filterPanel.Visible = !filterPanel.Visible;
 	}
 }

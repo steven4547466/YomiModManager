@@ -120,8 +120,8 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="Main" type="Node"]
 __meta__ = {
-"_edit_horizontal_guides_": [ 516.0, 346.0 ],
-"_edit_vertical_guides_": [ 111.0, 281.0, 270.0 ]
+"_edit_horizontal_guides_": [ 516.0, 346.0, 30.0, 171.0, 322.0 ],
+"_edit_vertical_guides_": [ 111.0, 281.0, 270.0, 813.0, 820.0 ]
 }
 
 [node name="MainPanel" type="Panel" parent="."]
@@ -348,7 +348,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -306.0
 margin_top = -15.0
-margin_right = 202.0
+margin_right = 88.0
 margin_bottom = 15.0
 placeholder_text = "Search"
 
@@ -364,6 +364,15 @@ margin_right = -5.0
 margin_bottom = 13.0
 grow_horizontal = 0
 text = "Upload mod"
+
+[node name="SearchTagFilter" type="Button" parent="MainPanel/Panel2"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -254.0
+margin_top = 7.0
+margin_right = -145.0
+margin_bottom = 33.0
+text = "Tag Filter"
 
 [node name="Panel3" type="Panel" parent="MainPanel"]
 margin_left = 312.0
@@ -397,7 +406,6 @@ custom_styles/panel = SubResource( 18 )
 
 [node name="ModInfoPanel" type="Panel" parent="MainPanel/InfoPanelContainer"]
 unique_name_in_owner = true
-visible = false
 margin_left = 609.0
 margin_top = 62.0
 margin_right = 1014.0
@@ -510,9 +518,10 @@ expand = true
 unique_name_in_owner = true
 margin_left = 5.0
 margin_top = 53.0
-margin_right = 77.0
+margin_right = 336.0
 margin_bottom = 73.0
 text = "Version:"
+clip_text = true
 
 [node name="Label" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
 margin_left = 5.0
@@ -539,20 +548,41 @@ margin_bottom = 20.0
 
 [node name="Label2" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
 margin_left = 5.0
-margin_top = 107.0
+margin_top = 111.0
 margin_right = 134.0
-margin_bottom = 127.0
+margin_bottom = 131.0
 text = "Dependencies:"
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
 margin_left = 10.0
-margin_top = 132.0
-margin_right = 345.0
-margin_bottom = 258.0
+margin_top = 134.0
+margin_right = 204.0
+margin_bottom = 260.0
 rect_min_size = Vector2( 117, 66 )
-scroll_horizontal_enabled = false
 
 [node name="DependenciesContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel/ScrollContainer2"]
+unique_name_in_owner = true
+margin_right = 117.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 117, 66 )
+mouse_filter = 2
+theme = SubResource( 9 )
+
+[node name="Label4" type="Label" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 213.0
+margin_top = 111.0
+margin_right = 342.0
+margin_bottom = 131.0
+text = "Tags:"
+
+[node name="ScrollContainer4" type="ScrollContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 215.0
+margin_top = 134.0
+margin_right = 401.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 117, 66 )
+
+[node name="ModTagsContainer" type="VBoxContainer" parent="MainPanel/InfoPanelContainer/ModInfoPanel/ScrollContainer4"]
 unique_name_in_owner = true
 margin_right = 117.0
 margin_bottom = 66.0
@@ -656,8 +686,15 @@ margin_right = 185.0
 margin_bottom = -13.0
 text = "Currently Installed: v"
 
+[node name="Panel2" type="Panel" parent="MainPanel/InfoPanelContainer/ModInfoPanel"]
+margin_left = 204.0
+margin_top = 112.0
+margin_right = 211.0
+margin_bottom = 263.0
+
 [node name="BundleInfoPanel" type="Panel" parent="MainPanel/InfoPanelContainer"]
 unique_name_in_owner = true
+visible = false
 margin_left = 609.0
 margin_top = 62.0
 margin_right = 1014.0
@@ -1611,6 +1648,17 @@ margin_right = -5.0
 margin_bottom = -6.0
 text = "Create"
 
+[node name="SelectCurrentlyEnabledModsProfile" type="Button" parent="MainPanel/CreateProfilePanel"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -321.0
+margin_top = -32.0
+margin_right = -90.0
+margin_bottom = -6.0
+text = "Select Currently Enabled"
+
 [node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/CreateProfilePanel"]
 margin_left = 191.0
 margin_top = 84.0
@@ -2056,6 +2104,124 @@ margin_left = 337.0
 margin_right = 413.0
 margin_bottom = 40.0
 
+[node name="TagsFilterContainer" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -310.0
+margin_top = 51.0
+margin_right = -90.0
+margin_bottom = 291.0
+
+[node name="TagsFilterScroll" type="ScrollContainer" parent="MainPanel/TagsFilterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 208, 154 )
+scroll_horizontal_enabled = false
+
+[node name="TagsFilterCheckBoxContainer" type="VBoxContainer" parent="MainPanel/TagsFilterContainer/TagsFilterScroll"]
+unique_name_in_owner = true
+margin_right = 208.0
+margin_bottom = 380.0
+rect_min_size = Vector2( 208, 0 )
+theme = SubResource( 26 )
+
+[node name="CheckBox" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_right = 208.0
+margin_bottom = 20.0
+text = "Character"
+
+[node name="CheckBox8" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 24.0
+margin_right = 208.0
+margin_bottom = 44.0
+text = "Stage"
+
+[node name="CheckBox2" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 48.0
+margin_right = 208.0
+margin_bottom = 68.0
+text = "Character Skin"
+
+[node name="CheckBox3" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 72.0
+margin_right = 208.0
+margin_bottom = 92.0
+text = "Sound Replacement"
+
+[node name="CheckBox4" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 96.0
+margin_right = 208.0
+margin_bottom = 116.0
+text = "Tweaks"
+
+[node name="CheckBox5" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 120.0
+margin_right = 208.0
+margin_bottom = 140.0
+text = "Gamemode"
+
+[node name="CheckBox6" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 144.0
+margin_right = 208.0
+margin_bottom = 164.0
+text = "Tool"
+
+[node name="CheckBox7" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 168.0
+margin_right = 208.0
+margin_bottom = 188.0
+text = "Library"
+
+[node name="CheckBox9" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 192.0
+margin_right = 208.0
+margin_bottom = 212.0
+text = "Overhaul"
+
+[node name="CheckBox10" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 216.0
+margin_right = 208.0
+margin_bottom = 236.0
+text = "Under Weak Tier"
+
+[node name="CheckBox11" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 240.0
+margin_right = 208.0
+margin_bottom = 260.0
+text = "Weak Tier"
+
+[node name="CheckBox12" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 264.0
+margin_right = 208.0
+margin_bottom = 284.0
+text = "Vanilla Tier"
+
+[node name="CheckBox13" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 288.0
+margin_right = 208.0
+margin_bottom = 308.0
+text = "Above Vanilla Tier"
+
+[node name="CheckBox14" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 312.0
+margin_right = 208.0
+margin_bottom = 332.0
+text = "Strong Tier"
+
+[node name="CheckBox15" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 336.0
+margin_right = 208.0
+margin_bottom = 356.0
+text = "Overpowered Tier"
+
+[node name="CheckBox16" type="CheckBox" parent="MainPanel/TagsFilterContainer/TagsFilterScroll/TagsFilterCheckBoxContainer"]
+margin_top = 360.0
+margin_right = 208.0
+margin_bottom = 380.0
+text = "Joke Tier"
+
 [node name="UpdateAvailable" type="WindowDialog" parent="."]
 unique_name_in_owner = true
 anchor_left = 0.5
@@ -2089,6 +2255,7 @@ text = "An update is available. Click Here to automatically download the update.
 [connection signal="gui_input" from="MainPanel/LeftTabContainer/LeftTabInnerContainer/ScrollContainer/TabContainer/ModProfilesTab" to="MainPanel" method="_on_ModProfilesTab_gui_input"]
 [connection signal="text_changed" from="MainPanel/Panel2/SearchBar" to="MainPanel" method="_on_SearchBar_text_changed"]
 [connection signal="pressed" from="MainPanel/Panel2/UploadButton" to="MainPanel" method="_on_UploadButton_pressed"]
+[connection signal="pressed" from="MainPanel/Panel2/SearchTagFilter" to="MainPanel" method="_on_SearchTagFilter_pressed"]
 [connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/DeleteButton" to="MainPanel" method="_on_DeleteButton_pressed"]
 [connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/InstallButton" to="MainPanel" method="_on_InstallButton_pressed"]
 [connection signal="pressed" from="MainPanel/InfoPanelContainer/ModInfoPanel/VBoxContainer/DisableButton" to="MainPanel" method="_on_DisableButton_pressed"]
@@ -2121,6 +2288,7 @@ text = "An update is available. Click Here to automatically download the update.
 [connection signal="text_changed" from="MainPanel/UploadBundlePanel/BundleUploadSearchBar" to="MainPanel" method="_on_BundleUploadSearchBar_text_changed"]
 [connection signal="pressed" from="MainPanel/CreateProfilePanel/ExitProfileCreator" to="MainPanel" method="_on_ExitProfileCreator_pressed"]
 [connection signal="pressed" from="MainPanel/CreateProfilePanel/CreateProfileButton" to="MainPanel" method="_on_CreateProfileButton_pressed"]
+[connection signal="pressed" from="MainPanel/CreateProfilePanel/SelectCurrentlyEnabledModsProfile" to="MainPanel" method="_on_SelectCurrentlyEnabledModsProfile_pressed"]
 [connection signal="text_changed" from="MainPanel/CreateProfilePanel/ProfileCreatorSearchBar" to="MainPanel" method="_on_ProfileCreatorSearchBar_text_changed"]
 [connection signal="text_changed" from="MainPanel/CreateProfilePanel/ProfileCreatorBundleSearchBar" to="MainPanel" method="_on_ProfileCreatorBundleSearchBar_text_changed"]
 [connection signal="pressed" from="MainPanel/CreateProfilePanel/ImportProfileButton" to="MainPanel" method="_on_ImportProfileButton_pressed"]
