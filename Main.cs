@@ -36,6 +36,8 @@ public class Main : Panel
 
 	public static Config Config { get; set; }
 
+	internal bool _ready = false;
+	internal static string _latestErrorText;
 	internal bool _offline = false;
 	public bool Offline
 	{
@@ -47,6 +49,8 @@ public class Main : Panel
 		{
 			if (value)
 			{
+				(GetNode("%ErrorMessageContainer") as Panel).Visible = true;
+				(GetNode("%ErrorMessage") as Label).Text = _latestErrorText;
 				(GetNode("%Offline") as Panel).Visible = true;
 			}
 			else
@@ -164,7 +168,8 @@ public class Main : Panel
 						
 						File.WriteAllText(Paths.InstalledModsPath, JsonConvert.SerializeObject(InstalledMods, JsonSettings));
 
-						SetupMods((GetNode("%SearchBar") as LineEdit).Text);
+						if (_ready)
+							SetupMods((GetNode("%SearchBar") as LineEdit).Text);
 					}
 					break;
 				}
@@ -198,6 +203,7 @@ public class Main : Panel
 				catch (Exception ex)
 				{
 					GD.PrintErr(ex);
+					_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 					Offline = true;
 				}
 			}
@@ -631,189 +637,154 @@ public class Main : Panel
 
 	public async override void _Ready()
 	{
-		OS.SetWindowTitle("Yomi Mod Manager");
-
-		string workingPath = AppDomain.CurrentDomain.BaseDirectory;
-
-		//if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-		//{
-		//	Type tNetFwPolicy2 = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
-		//	INetFwPolicy2 firewallPolicy = (INetFwPolicy2)Activator.CreateInstance(tNetFwPolicy2);
-
-		//	bool addRule = true;
-
-		//	foreach(INetFwRule rule in firewallPolicy.Rules)
-		//	{
-		//		if (rule.Name.IndexOf("yomimodmanager", StringComparison.OrdinalIgnoreCase) != -1)
-		//		{
-		//			addRule = false;
-		//			break;
-		//		}
-		//	}
-
-		//	if (addRule)
-		//	{
-		//		INetFwRule firewallRule = (INetFwRule)Activator.CreateInstance(
-		//		Type.GetTypeFromProgID("HNetCfg.FWRule"));
-
-		//		firewallRule.ApplicationName = Path.Combine(workingPath, "YomiModManager.exe");
-
-		//		firewallRule.Action = NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
-		//		firewallRule.Description = "Yomi Mod Manager";
-		//		firewallRule.Enabled = true;
-		//		firewallRule.InterfaceTypes = "All";
-
-		//		firewallRule.Name = $"YomiModManager";
-
-
-		//		firewallPolicy.Rules.Add(firewallRule);
-		//	}
-		//}
-
-		if (!Directory.Exists(Paths.RootPath))
-			Directory.CreateDirectory(Paths.RootPath);
-
-		if (!Directory.Exists(Paths.ModsPath))
-			Directory.CreateDirectory(Paths.ModsPath);
-
-		if (!File.Exists(Paths.ConfigPath))
+		try
 		{
-			Config = new Config();
-			File.WriteAllText(Paths.ConfigPath, JsonConvert.SerializeObject(Config, JsonSettings));
-		} 
-		else
-		{
-			Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Paths.ConfigPath), JsonSettings);
-		}
+			OS.SetWindowTitle("Yomi Mod Manager");
 
-		using (WebClient wc = new WebClient())
-		{
+			string workingPath = AppDomain.CurrentDomain.BaseDirectory;
+
+			if (!Directory.Exists(Paths.RootPath))
+				Directory.CreateDirectory(Paths.RootPath);
+
+			if (!Directory.Exists(Paths.ModsPath))
+				Directory.CreateDirectory(Paths.ModsPath);
+
+			if (!File.Exists(Paths.ConfigPath))
+			{
+				Config = new Config();
+				File.WriteAllText(Paths.ConfigPath, JsonConvert.SerializeObject(Config, JsonSettings));
+			}
+			else
+			{
+				Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Paths.ConfigPath), JsonSettings);
+			}
+
+			using (WebClient wc = new WebClient())
+			{
+				try
+				{
+					string currentVersion = "0";
+
+					if (File.Exists(Path.Combine(workingPath, "buildid.txt")))
+						currentVersion = File.ReadAllText(Path.Combine(workingPath, "buildid.txt")).Trim();
+
+					wc.Encoding = Encoding.UTF8;
+					string version = wc.DownloadString($"{Paths.RootUrl}/client_version").Trim();
+					if (!string.IsNullOrEmpty(version) && currentVersion != version)
+					{
+						if (!Config.AutoUpdateClient)
+							(GetNode("%UpdateAvailable") as Popup).PopupCentered();
+						else
+							UpdateClient();
+					}
+				}
+				catch (Exception ex)
+				{
+					GD.PrintErr(ex);
+					_latestErrorText = ex.Message + "\n" + ex.StackTrace;
+					Offline = true;
+				}
+
+			}
+
+			bool showPopup = false;
+
 			try
 			{
-				string currentVersion = "0";
-
-				if (File.Exists(Path.Combine(workingPath, "buildid.txt")))
-					currentVersion = File.ReadAllText(Path.Combine(workingPath, "buildid.txt")).Trim();
-
-				wc.Encoding = Encoding.UTF8;
-				string version = wc.DownloadString($"{Paths.RootUrl}/client_version").Trim();
-				if (!string.IsNullOrEmpty(version) && currentVersion != version)
+				if (Config.YomiInstallLocation == string.Empty || !Directory.Exists(Paths.YomiModsPath))
 				{
-					if (!Config.AutoUpdateClient)
-						(GetNode("%UpdateAvailable") as Popup).PopupCentered();
-					else
-						UpdateClient();
-					//string path = Path.Combine(workingPath, "YomiModManager.zip");
+					await ToSignal(GetTree(), "idle_frame");
+					showPopup = true;
+					FileDialog fileDialogue = GetNode("%SelectYomiLocation") as FileDialog;
+					fileDialogue.PopupCentered();
 
-					//wc.DownloadFile($"{Paths.RootUrl}/client", path);
-					//Config.ClientVersion = version;
-					//File.WriteAllText(Paths.ConfigPath, JsonConvert.SerializeObject(Config, JsonSettings));
+					object[] result = await ToSignal(fileDialogue, "file_selected");
+					string path = Path.GetDirectoryName((string)result[0]);
 
+					GD.Print("Selected: " + path);
 
-					//using (var file = File.OpenRead(path))
-					//using (var zip = new ZipArchive(file, ZipArchiveMode.Read))
-					//{
-					//	zip.ExtractToDirectory(workingPath, true);
-					//}
-
-					//File.Delete(path);
-
-					//Process.Start(Path.Combine(workingPath, "YomiModManager.exe"));
-
-					//Environment.Exit(0);
+					Config.YomiInstallLocation = path;
 				}
 			}
 			catch (Exception ex)
 			{
 				GD.PrintErr(ex);
-				Offline = true;
 			}
 
-		}
 
-		bool showPopup = false;
-
-		try
-		{
-			if (Config.YomiInstallLocation == string.Empty || !Directory.Exists(Paths.YomiModsPath))
+			if (showPopup)
 			{
-				await ToSignal(GetTree(), "idle_frame");
-				showPopup = true;
-				FileDialog fileDialogue = GetNode("%SelectYomiLocation") as FileDialog;
-				fileDialogue.PopupCentered();
-
-				object[] result = await ToSignal(fileDialogue, "file_selected");
-				string path = Path.GetDirectoryName((string)result[0]);
-
-				GD.Print("Selected: " + path);
-
-				Config.YomiInstallLocation = path;
+				(GetNode("%HelpPopup") as Popup).Show();
+				File.WriteAllText(Paths.ConfigPath, JsonConvert.SerializeObject(Config, JsonSettings));
 			}
+
+			DefaultModPanelStyle = new StyleBoxFlat();
+			DefaultModPanelStyle.BgColor = Godot.Color.Color8(17, 19, 31);
+
+			DefaultTabPanelStyle = new StyleBoxFlat();
+			DefaultTabPanelStyle.BgColor = Godot.Color.Color8(29, 31, 43);
+
+			SelectedTab = GetNode("%AllModsTab") as Panel;
+
+			if (File.Exists(Paths.InstalledModsPath))
+			{
+				string installedMods = File.ReadAllText(Paths.InstalledModsPath);
+				InstalledMods = JsonConvert.DeserializeObject<List<Mod>>(installedMods, JsonSettings);
+			}
+
+			if (File.Exists(Paths.InstalledBundlesPath))
+			{
+				string installedBundles = File.ReadAllText(Paths.InstalledBundlesPath);
+				InstalledBundles = JsonConvert.DeserializeObject<List<Bundle>>(installedBundles, JsonSettings);
+			}
+
+			if (File.Exists(Paths.ModProfilesPath))
+			{
+				string profiles = File.ReadAllText(Paths.ModProfilesPath);
+				ModProfiles = JsonConvert.DeserializeObject<List<ModProfile>>(profiles, JsonSettings);
+			}
+
+			ShowInfoPanel("ModInfoPanel");
+			DownloadManifest();
+			DetectLocalMods();
+
+			if (Config.AutoUpdateMods)
+			{
+				List<Mod> modsToUpdate = new List<Mod>();
+				foreach (Mod mod in InstalledMods)
+				{
+					if (ModHasUpdate(mod.Name))
+					{
+						modsToUpdate.Add(mod);
+					}
+				}
+
+				foreach(Mod mod in modsToUpdate)
+                {
+					InstallMod(mod.Name, !mod.Disabled);
+				}
+			}
+
+			foreach (Button button in GetNode("%TagsFilterCheckBoxContainer").GetChildren())
+			{
+				button.Connect("toggled", this, "TagFilterUpdated", new Godot.Collections.Array(button));
+			}
+
+			SetupMods();
+			_ready = true;
 		} 
 		catch(Exception ex)
 		{
 			GD.PrintErr(ex);
+			_latestErrorText = ex.Message + "\n" + ex.StackTrace;
+			Offline = true;
 		}
-		
-
-		if (showPopup)
-		{
-			(GetNode("%HelpPopup") as Popup).Show();
-			File.WriteAllText(Paths.ConfigPath, JsonConvert.SerializeObject(Config, JsonSettings));
-		}
-
-		DefaultModPanelStyle = new StyleBoxFlat();
-		DefaultModPanelStyle.BgColor = Godot.Color.Color8(17, 19, 31);
-
-		DefaultTabPanelStyle = new StyleBoxFlat();
-		DefaultTabPanelStyle.BgColor = Godot.Color.Color8(29, 31, 43);
-
-		SelectedTab = GetNode("%AllModsTab") as Panel;
-
-		if (File.Exists(Paths.InstalledModsPath))
-		{
-			string installedMods = File.ReadAllText(Paths.InstalledModsPath);
-			InstalledMods = JsonConvert.DeserializeObject<List<Mod>>(installedMods, JsonSettings);
-		}
-
-		if (File.Exists(Paths.InstalledBundlesPath))
-		{
-			string installedBundles = File.ReadAllText(Paths.InstalledBundlesPath);
-			InstalledBundles = JsonConvert.DeserializeObject<List<Bundle>>(installedBundles, JsonSettings);
-		}
-
-		if (File.Exists(Paths.ModProfilesPath))
-		{
-			string profiles = File.ReadAllText(Paths.ModProfilesPath);
-			ModProfiles = JsonConvert.DeserializeObject<List<ModProfile>>(profiles, JsonSettings);
-		}
-
-		ShowInfoPanel("ModInfoPanel");
-		DownloadManifest();
-		DetectLocalMods();
-
-		if (Config.AutoUpdateMods)
-		{
-			foreach (Mod mod in InstalledMods)
-			{
-				if (ModHasUpdate(mod.Name))
-				{
-					InstallMod(mod.Name, !mod.Disabled);
-				}
-			}
-		}
-
-		foreach (Button button in GetNode("%TagsFilterCheckBoxContainer").GetChildren())
-		{
-			button.Connect("toggled", this, "TagFilterUpdated", new Godot.Collections.Array(button));
-		}
-
-		SetupMods();
 	}
 
 	public void TagFilterUpdated(bool pressed, Button button)
 	{
 		string tag = button.Text;
+
 		if (pressed)
 		{
 			CurrentFilterTags.Add(tag);
@@ -905,6 +876,7 @@ public class Main : Panel
 					catch(Exception ex)
 					{
 						GD.PrintErr(ex);
+						_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 						Offline = true;
 					}
 					
@@ -934,6 +906,7 @@ public class Main : Panel
 				catch (Exception ex)
 				{
 					GD.PrintErr(ex);
+					_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 					Offline = true;
 				}
 				
@@ -1020,42 +993,7 @@ public class Main : Panel
 				prevSelect = panel;
 			}
 		}
-
-		//if (showOnlyInstalled)
-  //      {
-		//	foreach (string path in Directory.GetFiles(Paths.ModsPath))
-  //          {
-		//		try
-  //              {
-		//			Mod m = GetModFromZip(path);
-		//			if (filter != string.Empty)
-		//			{
-		//				if (!m.FriendlyName.StartsWith(filter, StringComparison.OrdinalIgnoreCase) &&
-		//					(filter.Length < 3 || m.FriendlyName.IndexOf(filter, StringComparison.OrdinalIgnoreCase) == -1)
-		//					)
-		//				{
-		//					continue;
-		//				}
-		//			}
-		//			if (!ModInstalled(m.Name) && Manifest.Mods.Find(m2 => m2.Name == m.Name) == null)
-  //                  {
-		//				PackedScene modPanel = ResourceLoader.Load("res://ModPanel.tscn") as PackedScene;
-		//				ModPanel panel = modPanel.Instance() as ModPanel;
-		//				panel.Connect("gui_input", this, "OnModClicked", new Godot.Collections.Array(panel));
-		//				RecurseAndConnectInput(panel.GetChildren(), panel);
-		//				panel.Init(m, true, true);
-		//				panel.SelfModulate = Godot.Color.Color8(0, 0, 0);
-		//				modsList.AddChild(panel);
-		//				if (m.Name == previouslySelected)
-		//				{
-		//					prevSelect = panel;
-		//				}
-		//			}
-  //              } 
-		//		catch(Exception) { }
-  //          }
-  //      }
-
+		
 		if (prevSelect != null)
 		{
 			OnModClicked(null, prevSelect);
@@ -1837,6 +1775,7 @@ public class Main : Panel
 						catch (Exception ex)
 						{
 							GD.PrintErr(ex);
+							_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 							Offline = true;
 						}
 					}
@@ -2249,6 +2188,7 @@ public class Main : Panel
 					{
 						if (button.Pressed)
 						{
+							GD.Print(button.Text);
 							ModToUpload.Tags.Add(button.Text);
 						}
 					}
@@ -3002,4 +2942,15 @@ public class Main : Panel
 		Panel filterPanel = (GetNode("%TagsFilterContainer") as Panel);
 		filterPanel.Visible = !filterPanel.Visible;
 	}
+
+	public void _on_ErrorMessageButton_pressed()
+	{
+		(GetNode("%ErrorMessageContainer") as Panel).Visible = false;
+	}
+
+	public void _on_CopyErrorButton_pressed()
+	{
+		OS.Clipboard = _latestErrorText;
+	}
+
 }

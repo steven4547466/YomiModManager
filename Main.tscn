@@ -1756,6 +1756,55 @@ margin_bottom = 124.0
 mouse_filter = 0
 autowrap = true
 
+[node name="ErrorMessageContainer" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -212.0
+margin_top = -64.0
+margin_right = 213.0
+margin_bottom = 113.0
+
+[node name="ErrorMessageButton" type="Button" parent="MainPanel/ErrorMessageContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -23.0
+margin_bottom = 26.0
+text = "X"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/ErrorMessageContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -202.5
+margin_top = -82.5
+margin_right = 175.5
+margin_bottom = 53.5
+scroll_horizontal_enabled = false
+
+[node name="ErrorMessage" type="Label" parent="MainPanel/ErrorMessageContainer/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 378.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 378, 0 )
+mouse_filter = 0
+autowrap = true
+
+[node name="CopyErrorButton" type="Button" parent="MainPanel/ErrorMessageContainer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -61.0
+margin_top = -31.0
+margin_right = -5.0
+margin_bottom = -5.0
+text = "Copy"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MainPanel"]
 margin_left = 35.0
 margin_top = 535.0
@@ -2057,9 +2106,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -283.0
-margin_top = -221.5
+margin_top = -222.5
 margin_right = 283.0
-margin_bottom = 187.5
+margin_bottom = 186.5
 rect_min_size = Vector2( 566, 409 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/SettingsMenu/ScrollContainer"]
@@ -2293,6 +2342,8 @@ text = "An update is available. Click Here to automatically download the update.
 [connection signal="text_changed" from="MainPanel/CreateProfilePanel/ProfileCreatorBundleSearchBar" to="MainPanel" method="_on_ProfileCreatorBundleSearchBar_text_changed"]
 [connection signal="pressed" from="MainPanel/CreateProfilePanel/ImportProfileButton" to="MainPanel" method="_on_ImportProfileButton_pressed"]
 [connection signal="pressed" from="MainPanel/UploadMessageContainer/ExitUploadMessageButton" to="MainPanel" method="_on_ExitUploadMessageButton_pressed"]
+[connection signal="pressed" from="MainPanel/ErrorMessageContainer/ErrorMessageButton" to="MainPanel" method="_on_ErrorMessageButton_pressed"]
+[connection signal="pressed" from="MainPanel/ErrorMessageContainer/CopyErrorButton" to="MainPanel" method="_on_CopyErrorButton_pressed"]
 [connection signal="gui_input" from="MainPanel/HBoxContainer/HelpButton" to="MainPanel" method="_on_HelpButton_gui_input"]
 [connection signal="pressed" from="MainPanel/HelpPopup/Panel/SelectYomiInstallLocation" to="MainPanel" method="_on_SelectYomiInstallLocation_pressed"]
 [connection signal="pressed" from="MainPanel/HelpPopup/Panel/OpenSettings" to="MainPanel" method="_on_OpenSettings_pressed"]
