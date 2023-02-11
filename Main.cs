@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.IO.Compression;
 using Newtonsoft.Json;
+using System.Threading;
 
 using Directory = System.IO.Directory;
 using Path = System.IO.Path;
@@ -35,6 +36,10 @@ public class Main : Panel
 	};
 
 	public static Config Config { get; set; }
+
+	internal static List<DownloadItem> DownloadQueue = new List<DownloadItem>();
+	internal static Panel DownloadProgressPanel;
+	internal static Label DownloadProgressText;
 
 	internal bool _ready = false;
 	internal static string _latestErrorText;
@@ -84,6 +89,56 @@ public class Main : Panel
 	public static Bundle BundleToUpload { get; set; }
 
 	public static ModProfile ProfileToCreate { get; set; }
+
+	public static void StartDownload()
+	{
+		if (DownloadQueue.Count <= 0)
+			return;
+		DownloadItem downloadItem = DownloadQueue[0];
+
+		using (WebClient wc = new WebClient())
+		{
+			int count = 0;
+			int lastPercent = 0;
+			wc.DownloadFileCompleted += new AsyncCompletedEventHandler((object sender, AsyncCompletedEventArgs ev) =>
+			{
+				if (downloadItem.OnComplete != null)
+				{
+					downloadItem.OnComplete();
+				}
+				DownloadProgressPanel.Visible = false;
+				DownloadQueue.RemoveAt(0);
+				StartDownload();
+			});
+
+			wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler((object sender, DownloadProgressChangedEventArgs ev) =>
+			{
+				if (count % 5 == 0 && ev.ProgressPercentage > lastPercent)
+				{
+					lastPercent = ev.ProgressPercentage;
+					DownloadProgressText.Text = $"Downloading {downloadItem.Name} ({ev.ProgressPercentage}%)";
+				}
+				count++;
+			});
+
+			DownloadProgressText.Text = $"Downloading {downloadItem.Name} (0%)";
+			DownloadProgressPanel.Visible = true;
+
+			wc.DownloadFileAsync(downloadItem.Uri, downloadItem.DownloadPath);
+		}
+	}
+
+	public static void QueueDownload(string name, string url, string path, Action onComplete = null)
+	{
+		DownloadItem item = new DownloadItem(name, url, path);
+		if (onComplete != null)
+			item.OnComplete = onComplete;
+		DownloadQueue.Add(item);
+		if (DownloadQueue.Count == 1)
+		{
+			StartDownload();
+		}
+	}
 
 	public static bool TryGetMod(string name, out Mod mod)
 	{
@@ -168,7 +223,7 @@ public class Main : Panel
 						
 						File.WriteAllText(Paths.InstalledModsPath, JsonConvert.SerializeObject(InstalledMods, JsonSettings));
 
-						if (_ready)
+						if (_ready && (SelectedTab.Name == "AllModsTab" || SelectedTab.Name == "InstalledModsTab"))
 							SetupMods((GetNode("%SearchBar") as LineEdit).Text);
 					}
 					break;
@@ -180,7 +235,7 @@ public class Main : Panel
 			File.Copy(path, Path.Combine(Paths.YomiModsPath, $"{name}.zip"), true);
 	}
 
-	public void InstallMod(string name, bool andEnable = true)
+	public void InstallMod(string name, bool andEnable = true, Action onCompleted = null)
 	{
 		if (!Directory.Exists(Paths.YomiModsPath))
 		{
@@ -195,13 +250,21 @@ public class Main : Panel
 			{
 				try
 				{
-					RecurseAndDownloadDependencies(mod, new List<string>(), andEnable);
 					string path = Path.Combine(Paths.ModsPath, $"{mod.Name}.zip");
-					wc.DownloadFile($"{Paths.RootUrl}/mod/{mod.Name}", path);
-					AddInstalledMod(path, andEnable);
+					if (DownloadQueue.FirstOrDefault(d => d.DownloadPath == path) == null)
+					{
+						RecurseAndDownloadDependencies(mod, new List<string>(), andEnable);
+						QueueDownload(mod.FriendlyName, $"{Paths.RootUrl}/mod/{mod.Name}", path, () =>
+						{
+							AddInstalledMod(path, andEnable);
+							if (onCompleted != null)
+								onCompleted();
+						});
+					}
 				}
 				catch (Exception ex)
 				{
+					GD.Print(6);
 					GD.PrintErr(ex);
 					_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 					Offline = true;
@@ -420,14 +483,21 @@ public class Main : Panel
 
 			File.WriteAllText(Paths.InstalledBundlesPath, JsonConvert.SerializeObject(InstalledBundles, JsonSettings));
 
+			int modsLeftToDownload = bundle.Mods.Count;
 			foreach (string mod in bundle.Mods)
 			{
-				InstallMod(mod, andEnable);
+				InstallMod(mod, andEnable, () => 
+				{
+					modsLeftToDownload--;
+
+					if (modsLeftToDownload <= 0)
+					{
+						bundle.Disabled = !andEnable;
+
+						SetupBundles((GetNode("%SearchBar") as LineEdit).Text);
+					}
+				});
 			}
-
-			bundle.Disabled = !andEnable;
-
-			SetupBundles((GetNode("%SearchBar") as LineEdit).Text);
 		}
 	}
 
@@ -641,6 +711,9 @@ public class Main : Panel
 		{
 			OS.SetWindowTitle("Yomi Mod Manager");
 
+			DownloadProgressPanel = GetNode("%DownloadProgressPanel") as Panel;
+			DownloadProgressText = GetNode("%DownloadProgressText") as Label;
+
 			string workingPath = AppDomain.CurrentDomain.BaseDirectory;
 
 			if (!Directory.Exists(Paths.RootPath))
@@ -680,6 +753,7 @@ public class Main : Panel
 				}
 				catch (Exception ex)
 				{
+					GD.Print(1);
 					GD.PrintErr(ex);
 					_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 					Offline = true;
@@ -760,7 +834,7 @@ public class Main : Panel
 				}
 
 				foreach(Mod mod in modsToUpdate)
-                {
+				{
 					InstallMod(mod.Name, !mod.Disabled);
 				}
 			}
@@ -775,6 +849,7 @@ public class Main : Panel
 		} 
 		catch(Exception ex)
 		{
+			GD.Print(2);
 			GD.PrintErr(ex);
 			_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 			Offline = true;
@@ -875,6 +950,7 @@ public class Main : Panel
 					}
 					catch(Exception ex)
 					{
+						GD.Print(3);
 						GD.PrintErr(ex);
 						_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 						Offline = true;
@@ -905,6 +981,7 @@ public class Main : Panel
 				} 
 				catch (Exception ex)
 				{
+					GD.Print(4);
 					GD.PrintErr(ex);
 					_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 					Offline = true;
@@ -945,7 +1022,7 @@ public class Main : Panel
 
 	public void SetupMods(string filter = "")
 	{
-		bool showOnlyInstalled = SelectedTab.Name == "InstalledModsTab";
+		bool showOnlyInstalled = SelectedTab != null ? SelectedTab.Name == "InstalledModsTab" : false;
 
 		string previouslySelected = string.Empty;
 		if (SelectedMod != null)
@@ -953,6 +1030,7 @@ public class Main : Panel
 			previouslySelected = SelectedMod.Mod.Name;
 			SelectedMod = null;
 		}
+
 		VBoxContainer modsList = GetNode("%ModsList") as VBoxContainer;
 
 		foreach (Node node in modsList.GetChildren())
@@ -1767,13 +1845,19 @@ public class Main : Panel
 					{
 						try
 						{
-							RecurseAndDownloadDependencies(depMod, didCheck, andEnable);
 							string depPath = Path.Combine(Paths.ModsPath, $"{depMod.Name}.zip");
-							wc.DownloadFile($"{Paths.RootUrl}/mod/{depMod.Name}", depPath);
-							AddInstalledMod(depPath, andEnable);
+							if (DownloadQueue.FirstOrDefault(d => d.DownloadPath == depPath) == null)
+							{
+								RecurseAndDownloadDependencies(depMod, didCheck, andEnable);
+								QueueDownload(depMod.FriendlyName, $"{Paths.RootUrl}/mod/{depMod.Name}", depPath, () =>
+								{
+									AddInstalledMod(depPath, andEnable);
+								});
+							}
 						}
 						catch (Exception ex)
 						{
+							GD.Print(5);
 							GD.PrintErr(ex);
 							_latestErrorText = ex.Message + "\n" + ex.StackTrace;
 							Offline = true;

@@ -120,8 +120,7 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="Main" type="Node"]
 __meta__ = {
-"_edit_horizontal_guides_": [ 516.0, 346.0, 30.0, 171.0, 322.0 ],
-"_edit_vertical_guides_": [ 111.0, 281.0, 270.0, 813.0, 820.0 ]
+"_edit_vertical_guides_": [ 277.0, 35.0 ]
 }
 
 [node name="MainPanel" type="Panel" parent="."]
@@ -2270,6 +2269,22 @@ margin_top = 360.0
 margin_right = 208.0
 margin_bottom = 380.0
 text = "Joke Tier"
+
+[node name="DownloadProgressPanel" type="Panel" parent="MainPanel"]
+unique_name_in_owner = true
+visible = false
+margin_left = 35.0
+margin_top = 439.0
+margin_right = 277.0
+margin_bottom = 500.0
+
+[node name="DownloadProgressText" type="Label" parent="MainPanel/DownloadProgressPanel"]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 5.0
+autowrap = true
+clip_text = true
 
 [node name="UpdateAvailable" type="WindowDialog" parent="."]
 unique_name_in_owner = true
